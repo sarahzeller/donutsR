@@ -1,2 +1,5 @@
 ^myFunctions\.Rproj$
 ^\.Rproj\.user$
+
+^R/not-ready*
+^LICENSE\.md$
