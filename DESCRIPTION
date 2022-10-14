@@ -1,0 +1,17 @@
+Package: myFunctions
+Title: Miscallaneous custom functions
+Version: 1.0.0.0
+Authors@R: 
+    person("Sarah", "Zeller", , "sarah.zeller@tu-dresden.de", role = c("aut", "cre"))
+Description: These are some functions I often use.
+License: use_mit_license()
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.1
+Imports:
+  dplyr,
+  extrafont,
+  ggplot2
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
