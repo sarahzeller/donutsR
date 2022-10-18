@@ -2,8 +2,8 @@
 #'
 #' Converts a data frame or tibble to a qmd table.
 #' This is handy for \code{qmd} Output.
-#' Note: if you want to use this, you need to specify the following:
-#' \code{#| eval: asis} in the R chunk.
+#' Note: if you want to use this, you need to specify the following in the R chunk:
+#' \code{#| output: asis}
 #'
 #' @param df The data frame that should be converted
 #' @param column_names The column names that should be printed.
