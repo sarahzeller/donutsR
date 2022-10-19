@@ -3,6 +3,8 @@
 export(convert_to_qmd_table)
 export(custom_theme)
 export(ggsave_embed)
+import(assertthat)
 import(extrafont)
 import(ggplot2)
 importFrom(dplyr,mutate)
+importFrom(stringr,str_replace)

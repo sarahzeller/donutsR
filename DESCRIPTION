@@ -11,7 +11,9 @@ RoxygenNote: 7.2.1
 Imports:
   dplyr,
   extrafont,
-  ggplot2
+  ggplot2,
+  assertthat,
+  stringr
 Suggests: 
     testthat (>= 3.0.0)
 Config/testthat/edition: 3

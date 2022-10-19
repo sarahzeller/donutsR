@@ -4,13 +4,17 @@
 \alias{convert_to_qmd_table}
 \title{Data frame to qmd table}
 \usage{
-convert_to_qmd_table(df, column_names = names(df)[-ncol(df)])
+convert_to_qmd_table(df, column_names = NA, align = NA)
 }
 \arguments{
 \item{df}{The data frame that should be converted}
 
 \item{column_names}{The column names that should be printed.
 Defaults to \code{names(df)}.}
+
+\item{align}{An optional character vector to define how the columns should be aligned.
+Each element can be either "l" (left), "r" (right), or "c" (center).
+The position of each element corresponds with the position of each column in \code{column_names}.}
 }
 \value{
 A qmd table.
