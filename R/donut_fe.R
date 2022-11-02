@@ -30,7 +30,9 @@
 #' donut_analysis(dist = c(5, 20), ds = Cigar, dep_var = "price", indep_vars = "pop", fe = "state")
 #'
 #'
+
 # globalVariables(c("geometry", "dist_km"))
+
 donut_analysis <- function(dist,
                            ds,
                            dep_var,
