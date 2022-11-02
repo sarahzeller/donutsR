@@ -4,20 +4,10 @@
 \alias{donut_analysis}
 \title{Perform a Donut FE analysis}
 \usage{
-donut_analysis(dist, ds, dep_var, indep_vars, fe = "id")
+donut_analysis()
 }
 \arguments{
-\item{dist}{A vector with two distances: the inner and the outer.
-The inner distance refers to the maximum distance for treatment.
-The outer distance refers to the overall population: it is the cut-off value.}
-
-\item{ds}{The dataset}
-
-\item{dep_var}{The dependent variable in the regression}
-
-\item{indep_vars}{a character vector of independent variables. Must be part of \code{ds}.}
-
-\item{fe}{a character vector of Fixed Effects variables. Must be part of \code{ds}.}
+\item{dist}{A vector with two distances: the inner and the outer.}
 }
 \value{
 A a list of plm models.
@@ -25,14 +15,4 @@ A a list of plm models.
 \description{
 Performs multiple FE-models with a given data set.
 The independent variable and the population vary.
-}
-\examples{
-library(plm)
-library(dplyr)
-data(Cigar)
-Cigar <- Cigar |>  mutate(dist_km = rnorm(nrow(Cigar), 20, 10)) |>  filter(dist_km >= 0)
-cigar_model <-
-donut_analysis(dist = c(5, 20), ds = Cigar, dep_var = "price", indep_vars = "pop", fe = "state")
-
-
 }
