@@ -1,12 +1,12 @@
 #' Perform a Donut FE analysis
 #'
 #' Performs a single FE-models with a given data set.
-#' The independent variable and the population vary.
+#' The independent variable and the population can be adjusted.
 #'
 #' @param dist A vector with two distances: the inner and the outer.
 #' The inner distance refers to the maximum distance for treatment.
 #' The outer distance refers to the overall population: it is the cut-off value.
-#' @param ds The dataset
+#' @param ds The dataset. A column "dist_km" MUST be part of it.
 #' @param dep_var The dependent variable in the regression
 #' @param indep_vars a character vector of independent variables. Must be part of `ds`.
 #' @param fe a character vector of Fixed Effects variables. Must be part of `ds`.
@@ -19,14 +19,21 @@
 #' @import assertthat
 #' @importFrom utils globalVariables
 #'
-#' @keywords internal
+#' @export
 #'
-#' @return A single plm model.
+#' @return A single plm model with an additional list element which contains
+#' the inner and outer radii.
+#'
+#' @examples
+#' library(plm)
+#' library(dplyr)
+#' data(Cigar)
+#' Cigar <- Cigar |>  mutate(dist_km = rnorm(nrow(Cigar), 20, 10)) |>  filter(dist_km >= 0)
+#' cigar_model <-
+#' donut_analysis(dist = c(5, 20), ds = Cigar, dep_var = "price", indep_vars = "pop", fe = "state")
 #'
 
-# globalVariables(c("geometry", "dist_km"))
-
-basic_donut_fe <- function(dist,
+donut_analysis <- function(dist,
                            ds,
                            dep_var,
                            indep_vars,
@@ -61,14 +68,7 @@ basic_donut_fe <- function(dist,
                            data = quote(data),
                            index = fe,
                            model = "within"))
+
+  model_fe[["radius"]] <- c(inner = inner, outer = outer)
   return(model_fe)
 }
-
-
-
-# library(plm)
-# library(dplyr)
-# data(Cigar)
-# Cigar <- Cigar |>  mutate(dist_km = rnorm(nrow(Cigar), 20, 10)) |>  filter(dist_km >= 0)
-# cigar_model <-
-# basic_donut_fe(dist = c(5, 20), ds = Cigar, dep_var = "price", indep_vars = "pop", fe = "state")
