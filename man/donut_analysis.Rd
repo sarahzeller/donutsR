@@ -4,20 +4,23 @@
 \alias{donut_analysis}
 \title{Perform a Donut FE analysis}
 \usage{
-donut_analysis(dist, ds, dep_var, indep_vars, fe = "id")
+donut_analysis(dist, ds, dep_var, indep_vars, fe = "id", dist_var = "dist_km")
 }
 \arguments{
 \item{dist}{A vector with two distances: the inner and the outer.
 The inner distance refers to the maximum distance for treatment.
 The outer distance refers to the overall population: it is the cut-off value.}
 
-\item{ds}{The dataset. A column "dist_km" MUST be part of it.}
+\item{ds}{The dataset.}
 
 \item{dep_var}{The dependent variable in the regression}
 
 \item{indep_vars}{a character vector of independent variables. Must be part of \code{ds}.}
 
 \item{fe}{a character vector of Fixed Effects variables. Must be part of \code{ds}.}
+
+\item{dist_var}{A character referring to the distance parameter.
+Defaults to \code{dist_km}.}
 }
 \value{
 A single plm model with an additional list element which contains
@@ -31,8 +34,15 @@ The independent variable and the population can be adjusted.
 library(plm)
 library(dplyr)
 data(Cigar)
-Cigar <- Cigar |>  mutate(dist_km = rnorm(nrow(Cigar), 20, 10)) |>  filter(dist_km >= 0)
-cigar_model <-
-donut_analysis(dist = c(5, 20), ds = Cigar, dep_var = "price", indep_vars = "pop", fe = "state")
-
+Cigar1 <- Cigar |>  mutate(dist_km = rnorm(nrow(Cigar), 20, 10)) |>  filter(dist_km >= 0)
+cigar_model1 <-
+donut_analysis(dist = c(5, 20), ds = Cigar1, dep_var = "price", indep_vars = "pop", fe = "state")
+Cigar2 <- Cigar |>  mutate(dist_km1 = rnorm(nrow(Cigar), 20, 10)) |>  filter(dist_km1 >= 0)
+cigar_model2 <-
+  donut_analysis(dist = c(5, 20),
+                 ds = Cigar2,
+                 dep_var = "price",
+                 indep_vars = "pop",
+                 fe = "state",
+                 dist_var = "dist_km1")
 }

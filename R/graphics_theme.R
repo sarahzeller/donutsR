@@ -22,6 +22,7 @@
 # Sys.setenv(R_GSCMD = "C:/Program Files/gs/gs9.55.0/bin/gswin64c.exe")
 
 custom_theme <- function(){
+  loadfonts(device = "win")
   theme_minimal() +
     theme(text = element_text(family = "Open Sans"),
           plot.title = element_text(size = 18),
