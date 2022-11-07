@@ -18,8 +18,8 @@ Imports:
     dtplyr,
     plm,
     tidyr,
-    tibble,
-    data.table
+    tibble
 Suggests: 
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    data.table
 Config/testthat/edition: 3
