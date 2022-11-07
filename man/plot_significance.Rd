@@ -17,6 +17,7 @@ A ggplot2 plot
 \description{
 Convenience function to extract distances from donut_analysis model.
 Input needs to be a (list of) \code{donut_analysis} models.
+Consider adding \code{theme(legend.text.align = 1)} to right-align the p-value legend.
 }
 \examples{
 library(plm)

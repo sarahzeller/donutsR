@@ -13,6 +13,7 @@ A set of R functions that I use often.
 -   `custom_theme` is the theme I use for ggplots.
 -   `ggsave_embed` enables saving ggplots with embedded fonts to PDF.
 -   `donut_analysis` is the first step in a donut analysis.
+-   `plot_significance` and `extract_dist` are convenience functions for `donut_analysis` outputs.
 
 `donut_analysis` takes a data frame with a distance parameter `dist_km` which includes the distance to a relevant geometry for all or some rows. 
 Now follow two distance parameters in `dist`. 

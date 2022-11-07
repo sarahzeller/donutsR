@@ -8,7 +8,6 @@
 #' @import dplyr
 #' @import tidyr
 #' @import tibble
-#' @import data.table
 #'
 #' @export
 #' @return A tibble

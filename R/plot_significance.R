@@ -2,12 +2,13 @@
 #'
 #' Convenience function to extract distances from donut_analysis model.
 #' Input needs to be a (list of) `donut_analysis` models.
+#' Consider adding `theme(legend.text.align = 1)` to right-align the p-value legend.
 #'
 #' @param donut_models List of `donut_analysis` models
 #' @param var The dependent variable in all `donut_analysis` models which should be plotted.
 #'
 #' @import ggplot2
-#' @import assertthat
+#' @importFrom assertthat assert_that
 #' @import dplyr
 #' @import tibble
 #'
@@ -50,12 +51,10 @@ plot_significance <- function(donut_models,
                              p01 = pval < .01,
                              p05 = pval < .05,
                              p10 = pval < .1,
-                             stars = ifelse(p01 == TRUE, "*** p < 0.01",
-                                            ifelse(p05 == TRUE, "**  p < 0.05",
-                                                   ifelse(p10 == TRUE,
-                                                          "*   p < 0.1",
-                                                          "p >= 0.1"))) |>
-                               as.factor()
+                             stars = factor(x = ifelse(p01 == TRUE, 3,
+                                                       ifelse(p05 == TRUE, 2,
+                                                              ifelse(p10 == TRUE, 1, 0))),
+                                            levels = 3:0)
                       )
                     }) |>
     do.call(rbind, args = _)
@@ -72,8 +71,11 @@ plot_significance <- function(donut_models,
          title =  "Significance varies with inner and outer radius.",
          subtitle = paste("Dependent variable:", var),
          col = "Coefficient size",
-         size = "Significance level")
-    # custom_theme()
+         size = "Significance level") +
+    scale_size_manual(breaks = 3:0,
+                      labels = c( "*** p < 0.01", "** p < 0.05", "*  p < 0.1", "p >= 0.1"),
+                      values = (4:1)*2,
+                      drop = FALSE)
 
   return(plot)
 }
