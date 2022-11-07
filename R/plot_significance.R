@@ -59,12 +59,15 @@ plot_significance <- function(donut_models,
                     }) |>
     do.call(rbind, args = _)
 
+  lim <-  p_value[p_value$name == var,]$coefficient |> max() |> abs()
+
   plot <-
     p_value |>
     filter(name == var) |>
     ggplot(aes(x = inner, y = outer, col = coefficient, size = stars)) +
     geom_point() +
-    scale_color_viridis_c(direction = -1) +
+    scale_color_viridis_c(direction = -1,
+                          limits = c(-lim, lim)) +
     labs(x = "Inner radius",
          y = "Outer radius",
          caption = "Inner radius: Treated population lives within ... km of landfill. Outer radius: Population lives within ... km of landfill.",
