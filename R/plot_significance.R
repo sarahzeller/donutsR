@@ -39,7 +39,7 @@ plot_significance <- function(donut_models,
                           msg = "Please add a variable of interest.")
   summaries <- lapply(1:length(donut_models),
                       function(x) summary(donut_models[[x]]))
-  dep_var = summaries[[1]]$call$formula[[2]]
+  dep_var = summaries[[1]][["formula"]][[2]] |> as.character()
   assert_that(summaries[[1]]$call$formula == summaries[[2]]$call$formula,
               msg = "Ensure that the formula is the same in each model.")
 
@@ -75,8 +75,8 @@ plot_significance <- function(donut_models,
          y = "Outer radius",
          caption = "Inner radius: Treated population lives within ... km of landfill. Outer radius: Population lives within ... km of landfill.",
          title =  "Significance varies with inner and outer radius.",
-         subtitle = paste("Variable of interest:", var,
-                          ", dependent variable:"),
+         subtitle = paste0("Variable of interest: ", var,
+                           ", dependent variable: ", dep_var),
          col = "Coefficient size",
          size = "Significance level") +
     scale_size_manual(breaks = 3:0,
