@@ -6,7 +6,7 @@
 #' @param align A string vector with elements "c" (center), "r" (right), or "l" (left).
 #'
 #' @importFrom stringr str_replace
-#' @import assertthat
+#' @importFrom assertthat assert_that
 #'
 #' @return A character vector
 

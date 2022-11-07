@@ -10,7 +10,7 @@
 #' @import ggplot2
 #' @importFrom assertthat assert_that
 #' @import dplyr
-#' @import tibble
+#' @importFrom tibble tibble
 #'
 #' @export
 #' @return A ggplot2 plot

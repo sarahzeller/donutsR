@@ -6,8 +6,10 @@
 #' @param models List of `donut_analysis` models, or single `donut_analysis` model
 #'
 #' @import dplyr
-#' @import tidyr
-#' @import tibble
+#' @importFrom tidyr pivot_longer
+#' @importFrom tidyr pivot_wider
+#' @importFrom tibble as_tibble
+#' @importFrom tibble rownames_to_column
 #'
 #' @export
 #' @return A tibble

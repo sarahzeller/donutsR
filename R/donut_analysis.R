@@ -18,7 +18,7 @@
 #' @import dtplyr
 #' @importFrom stats reformulate
 #' @importFrom stats rnorm
-#' @import assertthat
+#' @importFrom assertthat assert_that
 #' @importFrom utils globalVariables
 #'
 #' @export
