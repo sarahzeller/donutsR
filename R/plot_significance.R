@@ -11,6 +11,7 @@
 #' @importFrom assertthat assert_that
 #' @import dplyr
 #' @importFrom tibble tibble
+#' @importFrom scales muted
 #'
 #' @export
 #' @return A ggplot2 plot
@@ -69,8 +70,12 @@ plot_significance <- function(donut_models,
     filter(name == var) |>
     ggplot(aes(x = inner, y = outer, col = coefficient, size = stars)) +
     geom_point() +
-    scale_color_viridis_c(direction = -1,
-                          limits = c(-lim, lim)) +
+    scale_colour_gradient2(
+      low = muted("red"),
+      mid = "white",
+      high = muted("blue"),
+      midpoint = 0,
+      limits = c(-lim, lim)) +
     labs(x = "Inner radius",
          y = "Outer radius",
          caption = "Inner radius: Treated population lives within ... km of landfill. Outer radius: Population lives within ... km of landfill.",
