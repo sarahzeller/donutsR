@@ -34,8 +34,8 @@
 
 plot_significance <- function(donut_models,
                               var) {
-  assert_that(donut_models[[1]][11] |> names() == "radius",
-                          msg = "Insert a list of donut_models.")
+  assert_that("radius" %in% names(donut_models[[1]]),
+              msg = "Insert a list of donut_models.")
   assert_that(missing(var) == FALSE,
                           msg = "Please add a variable of interest.")
   summaries <- lapply(1:length(donut_models),
