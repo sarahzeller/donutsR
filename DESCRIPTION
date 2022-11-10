@@ -19,7 +19,8 @@ Imports:
     plm,
     tidyr,
     tibble,
-    scales
+    scales,
+    estimatr
 Suggests: 
     testthat (>= 3.0.0),
     data.table

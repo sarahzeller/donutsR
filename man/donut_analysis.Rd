@@ -4,7 +4,15 @@
 \alias{donut_analysis}
 \title{Perform a Donut FE analysis}
 \usage{
-donut_analysis(dist, ds, dep_var, indep_vars, fe = "id", dist_var = "dist_km")
+donut_analysis(
+  dist,
+  ds,
+  dep_var,
+  indep_vars,
+  fe = "id",
+  dist_var = "dist_km",
+  clust = TRUE
+)
 }
 \arguments{
 \item{dist}{A vector with two distances: the inner and the outer.
@@ -21,6 +29,10 @@ The outer distance refers to the overall population: it is the cut-off value.}
 
 \item{dist_var}{A character referring to the distance parameter.
 Defaults to \code{dist_km}.}
+
+\item{clust}{is a boolean, whether an analysis with clustered standard errors
+(TRUE, estimatr::lm_robust) or an analysis with non-clustered standard errors
+(FALSE, plm::plm) should be conducted.}
 }
 \value{
 A single plm model with an additional list element which contains

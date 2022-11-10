@@ -40,15 +40,17 @@ plot_significance <- function(donut_models,
                           msg = "Please add a variable of interest.")
   summaries <- lapply(1:length(donut_models),
                       function(x) summary(donut_models[[x]]))
-  dep_var = summaries[[1]][["formula"]][[2]] |> as.character()
+  dep_var <- ifelse(is.null(summaries[[1]][["formula"]]),
+                    all.vars(summaries[[1]][["call"]])[[1]],
+                    as.character(summaries[[1]][["formula"]][[2]]))
   assert_that(summaries[[1]]$call$formula == summaries[[2]]$call$formula,
               msg = "Ensure that the formula is the same in each model.")
 
   p_value <- lapply(1:length(summaries),
                     function (x) {
                       tibble(name = summaries[[x]][["coefficients"]] |> rownames(),
-                             inner = summaries[[x]][["radius"]][["inner"]],
-                             outer = summaries[[x]][["radius"]][["outer"]],
+                             inner = donut_models[[x]][["radius"]][["inner"]],
+                             outer = donut_models[[x]][["radius"]][["outer"]],
                              coefficient = summaries[[x]][["coefficients"]][, 1],
                              positive = coefficient >= 0,
                              pval = summaries[[x]][["coefficients"]][, 4],

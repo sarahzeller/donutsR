@@ -12,6 +12,9 @@
 #' @param fe a character vector of Fixed Effects variables. Must be part of `ds`.
 #' @param dist_var A character referring to the distance parameter.
 #' Defaults to `dist_km`.
+#' @param clust is a boolean, whether an analysis with clustered standard errors
+#' (TRUE, estimatr::lm_robust) or an analysis with non-clustered standard errors
+#' (FALSE, plm::plm) should be conducted.
 #'
 #' @importFrom plm plm
 #' @import dplyr
@@ -20,6 +23,7 @@
 #' @importFrom stats rnorm
 #' @importFrom assertthat assert_that
 #' @importFrom utils globalVariables
+#' @importFrom estimatr lm_robust
 #'
 #' @export
 #'
@@ -47,7 +51,8 @@ donut_analysis <- function(dist,
                            dep_var,
                            indep_vars,
                            fe = "id",
-                           dist_var = "dist_km") {
+                           dist_var = "dist_km",
+                           clust = TRUE) {
   assert_that(length(dist) == 2 & is.numeric(dist),
               msg = "Please enter two numeric values for the distances.")
   assert_that(is.data.frame(ds),
@@ -82,12 +87,19 @@ donut_analysis <- function(dist,
     collect()
   }
 
+  if (clust == TRUE) {
+    model_fe <- do.call("lm_robust",
+                        list(formula,
+                             data = quote(data),
+                             clusters = sym(fe),
+                             fixed_effects = reformulate(fe)))
+  } else {
   model_fe <- do.call('plm',
                       list(formula,
                            data = quote(data),
                            index = fe,
                            model = "within"))
-
+  }
   model_fe[["radius"]] <- c(inner = inner, outer = outer)
   return(model_fe)
 }
