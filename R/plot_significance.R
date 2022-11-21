@@ -12,6 +12,7 @@
 #' @import dplyr
 #' @importFrom tibble tibble
 #' @importFrom scales muted
+#' @importFrom fixest coeftable
 #'
 #' @export
 #' @return A ggplot2 plot
@@ -38,6 +39,10 @@ plot_significance <- function(donut_models,
               msg = "Insert a list of donut_models.")
   assert_that(missing(var) == FALSE,
                           msg = "Please add a variable of interest.")
+
+  if (is(donut_models[[1]], "plm")) {
+
+
   summaries <- lapply(1:length(donut_models),
                       function(x) summary(donut_models[[x]]))
   dep_var <- ifelse(is.null(summaries[[1]][["formula"]]),
@@ -65,6 +70,35 @@ plot_significance <- function(donut_models,
                     }) |>
     do.call(rbind, args = _)
 
+
+  } else if (is(donut_models[[1]], "fixest")) {
+    summaries <- lapply(1:length(donut_models), function(x) summary(donut_models[[x]]))
+    dep_var <- ifelse(is.null(summaries[[1]][["formula"]]),
+                      all.vars(summaries[[1]][["call"]])[[1]],
+                      as.character(summaries[[1]][["formula"]][[2]]))
+
+    assert_that(summaries[[1]]$call$fml == summaries[[2]]$call$fml,
+                msg = "Ensure that the formula is the same in each model.")
+    p_value <- lapply(1:length(summaries),
+                      function(x) {
+                        tibble(name = rownames(coeftable(donut_models[[x]])),
+                               inner = donut_models[[x]][["radius"]][["inner"]],
+                               outer = donut_models[[x]][["radius"]][["outer"]],
+                               coefficient = donut_models[[x]][["coefficients"]],
+                               positive = coefficient >= 0,
+                               pval = coeftable(donut_models[[x]])[, 4],
+                               p01 = pval < .01,
+                               p05 = pval < .05,
+                               p10 = pval < .1,
+                               stars = factor(x = ifelse(p01 == TRUE, 3,
+                                                         ifelse(p05 == TRUE, 2,
+                                                                ifelse(p10 == TRUE, 1, 0))),
+                                              levels = 3:0)
+                               )
+                        }) |>
+      do.call(rbind, args = _)
+  }
+
   lim <-  p_value[p_value$name == var,]$coefficient |> max() |> abs()
 
   plot <-
@@ -90,6 +124,6 @@ plot_significance <- function(donut_models,
                       labels = c( "*** p < 0.01", "** p < 0.05", "*  p < 0.1", "p >= 0.1"),
                       values = (4:1)*2,
                       drop = FALSE)
-
   return(plot)
+
 }

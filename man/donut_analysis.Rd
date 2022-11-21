@@ -31,7 +31,7 @@ The outer distance refers to the overall population: it is the cut-off value.}
 Defaults to \code{dist_km}.}
 
 \item{clust}{is a boolean, whether an analysis with clustered standard errors
-(TRUE, estimatr::lm_robust) or an analysis with non-clustered standard errors
+(TRUE, fixest::feols) or an analysis with non-clustered standard errors
 (FALSE, plm::plm) should be conducted.}
 }
 \value{

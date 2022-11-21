@@ -13,7 +13,7 @@
 #' @param dist_var A character referring to the distance parameter.
 #' Defaults to `dist_km`.
 #' @param clust is a boolean, whether an analysis with clustered standard errors
-#' (TRUE, estimatr::lm_robust) or an analysis with non-clustered standard errors
+#' (TRUE, fixest::feols) or an analysis with non-clustered standard errors
 #' (FALSE, plm::plm) should be conducted.
 #'
 #' @importFrom plm plm
@@ -23,7 +23,7 @@
 #' @importFrom stats rnorm
 #' @importFrom assertthat assert_that
 #' @importFrom utils globalVariables
-#' @importFrom estimatr lm_robust
+#' @importFrom fixest feols
 #'
 #' @export
 #'
@@ -88,11 +88,9 @@ donut_analysis <- function(dist,
   }
 
   if (clust == TRUE) {
-    model_fe <- do.call("lm_robust",
-                        list(formula,
-                             data = quote(data),
-                             clusters = sym(fe),
-                             fixed_effects = reformulate(fe)))
+    model_fe <- do.call("feols", list(formula(paste(c(formula, fe), collapse = "|")),
+                                      data = quote(data),
+                                      "cluster"))
   } else {
   model_fe <- do.call('plm',
                       list(formula,
