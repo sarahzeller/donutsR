@@ -99,5 +99,6 @@ donut_analysis <- function(dist,
                            model = "within"))
   }
   model_fe[["radius"]] <- c(inner = inner, outer = outer)
+  model_fe[["n_treated"]] <- data |> filter(dist == TRUE) |> nrow()
   return(model_fe)
 }

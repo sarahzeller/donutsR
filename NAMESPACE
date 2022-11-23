@@ -3,7 +3,7 @@
 export(convert_to_qmd_table)
 export(custom_theme)
 export(donut_analysis)
-export(extract_dist)
+export(extract_dist_n)
 export(ggsave_embed)
 export(plot_significance)
 import(assertthat)

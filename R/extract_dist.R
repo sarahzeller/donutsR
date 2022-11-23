@@ -1,6 +1,8 @@
-#' Extract distances from donut_analysis model
+#' Extract distances and n from donut_analysis model
 #'
-#' Convenience function to extract distances from donut_analysis model.
+#' Convenience function to extract distances as well as number of treated,
+#' number of observations, number of original observations, and percentage of
+#' treated from donut_analysis model.
 #' Input needs to be a (list of) `donut_analysis` models.
 #'
 #' @param models List of `donut_analysis` models, or single `donut_analysis` model
@@ -21,25 +23,42 @@
 #' Cigar <- Cigar |>  mutate(dist_km = rnorm(nrow(Cigar), 20, 10)) |>  filter(dist_km >= 0)
 #' cigar_model <-
 #' donut_analysis(dist = c(5, 20), ds = Cigar, dep_var = "price", indep_vars = "pop", fe = "state")
-#' extract_dist(cigar_model)
+#' extract_dist_n(cigar_model)
 
 
-extract_dist <- function(models){
+extract_dist_n <- function(models){
+  # for list of donut_models
   if (is.null(models[["radius"]])) {
-
-    vapply(1:length(models),
-           function (x) models[[x]][["radius"]],
-           FUN.VALUE = numeric(2)) |>
+    info <-
+      vapply(1:length(models),
+             function (x) models[[x]][["radius"]],
+             FUN.VALUE = numeric(2)) |>
       as_tibble(rownames = NA) |>
       rownames_to_column() |>
       pivot_longer(!rowname) |>
-      pivot_wider(names_from = "rowname")
+      pivot_wider(names_from = "rowname") |>
+      mutate(n_treated =
+               sapply(1:35,
+                      function(x) donut_hh_wealth_index[[x]][["n_treated"]])) |>
+      mutate(n_obs = sapply(1:35,
+                            function(x) donut_hh_wealth_index[[x]][["nobs"]])) |>
+      mutate(n_obs_origin =
+               sapply(1:35,
+                      function(x) donut_hh_wealth_index[[x]][["nobs_origin"]])) |>
+      mutate(perc_treated = n_treated/n_obs)
   }
+  # for just one donut_model
   else if (is.null(models[["radius"]]) == FALSE){
-    models[["radius"]] |>
+    info <-
+      models[["radius"]] |>
       as_tibble(rownames = NA) |>
       rownames_to_column() |>
       pivot_longer(!rowname) |>
-      pivot_wider(names_from = "rowname")
+      pivot_wider(names_from = "rowname") |>
+      mutate(n_treated = models[["n_treated"]]) |>
+      mutate(n_obs = models[["nobs"]]) |>
+      mutate(n_obs = models[["nobs_origin"]]) |>
+      mutate(perc_treated = n_treated/n_obs)
   }
+  return(info)
 }
