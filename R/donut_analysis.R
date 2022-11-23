@@ -24,6 +24,7 @@
 #' @importFrom assertthat assert_that
 #' @importFrom utils globalVariables
 #' @importFrom fixest feols
+#' @importFrom tidyr drop_na
 #'
 #' @export
 #'
@@ -77,28 +78,42 @@ donut_analysis <- function(dist,
       mutate(dist = (dist_km <= inner) |> as.integer()) |>
       select(c(all.vars(formula),
                all_of(fe))) |>
-      collect()
+      collect() |>
+      drop_na()
+
   } else {
-  data <- ds[ds[[dist_var]] <= outer,]
-  data <- data |>
-    mutate(dist = (data[[dist_var]] <= inner) |> as.integer()) |>
-    select(c(all.vars(formula),
-             all_of(fe))) |>
-    collect()
+    data <- ds[ds[[dist_var]] <= outer,]
+    data <- data |>
+      mutate(dist = (data[[dist_var]] <= inner) |> as.integer()) |>
+      select(c(all.vars(formula),
+               all_of(fe))) |>
+      collect() |>
+      drop_na()
   }
 
   if (clust == TRUE) {
     model_fe <- do.call("feols", list(formula(paste(c(formula, fe), collapse = "|")),
                                       data = quote(data),
                                       "cluster"))
+    clust <- data |>
+      group_by(get(fe)) |>
+      summarize(clust_size = n(), treated_clust = !sum(dist) == 0)
+    names(clust)[1] <- fe
   } else {
-  model_fe <- do.call('plm',
-                      list(formula,
-                           data = quote(data),
-                           index = fe,
-                           model = "within"))
+    model_fe <- do.call('plm',
+                        list(formula,
+                             data = quote(data),
+                             index = fe,
+                             model = "within"))
+    clust <- NULL
+    summary_clust <- NULL
   }
+
+  #add additional info
   model_fe[["radius"]] <- c(inner = inner, outer = outer)
   model_fe[["n_treated"]] <- data |> filter(dist == TRUE) |> nrow()
+  model_fe[["clust"]] <- clust
+  model_fe[["summary_clust"]] <- c(n = nrow(clust),
+                                   n_treated = sum(clust$treated_clust))
   return(model_fe)
 }

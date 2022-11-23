@@ -1,8 +1,8 @@
-#' Extract distances and n from donut_analysis model
+#' Extract additional info from donut_analysis model
 #'
 #' Convenience function to extract distances as well as number of treated,
-#' number of observations, number of original observations, and percentage of
-#' treated from donut_analysis model.
+#' observations, original observations, percentage of treated, clusters, and
+#' treated clusters from donut_analysis model.
 #' Input needs to be a (list of) `donut_analysis` models.
 #'
 #' @param models List of `donut_analysis` models, or single `donut_analysis` model
@@ -23,10 +23,10 @@
 #' Cigar <- Cigar |>  mutate(dist_km = rnorm(nrow(Cigar), 20, 10)) |>  filter(dist_km >= 0)
 #' cigar_model <-
 #' donut_analysis(dist = c(5, 20), ds = Cigar, dep_var = "price", indep_vars = "pop", fe = "state")
-#' extract_dist_n(cigar_model)
+#' extract_info(cigar_model)
 
 
-extract_dist_n <- function(models){
+extract_info <- function(models){
   # for list of donut_models
   if (is.null(models[["radius"]])) {
     info <-
@@ -38,14 +38,19 @@ extract_dist_n <- function(models){
       pivot_longer(!rowname) |>
       pivot_wider(names_from = "rowname") |>
       mutate(n_treated =
-               sapply(1:35,
-                      function(x) donut_hh_wealth_index[[x]][["n_treated"]])) |>
-      mutate(n_obs = sapply(1:35,
-                            function(x) donut_hh_wealth_index[[x]][["nobs"]])) |>
+               sapply(1:length(models),
+                      function(x) models[[x]][["n_treated"]])) |>
+      mutate(n_obs = sapply(1:length(models),
+                            function(x) models[[x]][["nobs"]])) |>
       mutate(n_obs_origin =
-               sapply(1:35,
-                      function(x) donut_hh_wealth_index[[x]][["nobs_origin"]])) |>
-      mutate(perc_treated = n_treated/n_obs)
+               sapply(1:length(models),
+                      function(x) models[[x]][["nobs_origin"]])) |>
+      mutate(perc_treated = n_treated/n_obs) |>
+      mutate(n_clust = sapply(1:length(models),
+                              function (x) models[[x]][["summary_clust"]][["n"]])) |>
+      mutate(n_clust_treated =
+               sapply(1:length(models),
+                      function (x) models[[x]][["summary_clust"]][["n_treated"]]))
   }
   # for just one donut_model
   else if (is.null(models[["radius"]]) == FALSE){
@@ -58,7 +63,9 @@ extract_dist_n <- function(models){
       mutate(n_treated = models[["n_treated"]]) |>
       mutate(n_obs = models[["nobs"]]) |>
       mutate(n_obs = models[["nobs_origin"]]) |>
-      mutate(perc_treated = n_treated/n_obs)
+      mutate(perc_treated = n_treated/n_obs) |>
+      mutate(n_clust = models[["summary_clust"]][["n"]]) |>
+      mutate(n_clust_treated = models[["summary_clust"]][["n_treated"]])
   }
   return(info)
 }
