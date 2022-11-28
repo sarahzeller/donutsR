@@ -4,12 +4,15 @@
 \alias{plot_significance}
 \title{Extract distances from donut_analysis model}
 \usage{
-plot_significance(donut_models, var)
+plot_significance(donut_models, var, filter_80 = TRUE)
 }
 \arguments{
 \item{donut_models}{List of \code{donut_analysis} models}
 
 \item{var}{The dependent variable in all \code{donut_analysis} models which should be plotted.}
+
+\item{filter_80}{Boolean: Should only those regressions be displayed for which
+the treatment group is >= 80\% of the whole population? Defaults to \code{TRUE}.}
 }
 \value{
 A ggplot2 plot
