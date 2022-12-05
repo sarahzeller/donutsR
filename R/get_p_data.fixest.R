@@ -4,6 +4,7 @@
 #'
 #' @param donut_model Object of class `donut_model`
 #' @param filter_80 Boolean: should the result be ignored if the treated pop. is >80%?
+#' @param name The name of the variable to be plotted
 #'
 #' @importFrom tibble tibble
 #' @importFrom fixest coeftable
@@ -12,7 +13,7 @@
 #' @keywords internal
 #' @export
 
-get_p_data.fixest <- function(donut_model, filter_80, ...) {
+get_p_data.fixest <- function(donut_model, filter_80, name, ...) {
   if ((filter_80 == TRUE &
        donut_model$n_treated / donut_model$nobs <= 0.8) |
       filter_80 == FALSE) {
@@ -30,8 +31,8 @@ get_p_data.fixest <- function(donut_model, filter_80, ...) {
       # bootstrapped p-values
       mutate(pval_bs = ifelse(
         name == "dist" &
-          "bootstrap_dist" %in% names(donut_models),
-        summaries[[x]][["bootstrap_dist"]][["p_val"]],
+          "bootstrap_dist" %in% names(donut_model),
+        donut_model[["bootstrap_dist"]][["p_val"]],
         pval
       )) |>
       mutate(p01 = pval_bs < .01) |>

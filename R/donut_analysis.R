@@ -40,6 +40,7 @@
 #' @examples
 #' library(plm)
 #' library(dplyr)
+#' library(fixest)
 #' data(Cigar)
 #' Cigar1 <- Cigar |>  mutate(dist_km = rnorm(nrow(Cigar), 20, 10)) |>  filter(dist_km >= 0)
 #' cigar_model1 <-
@@ -61,7 +62,7 @@ donut_analysis <- function(dist,
                            fe = "id",
                            dist_var = "dist_km",
                            clust = TRUE,
-                           bootstrap = FALSE,
+                           bootstrap = TRUE,
                            B = 9999,
                            ...) {
   assert_that(length(dist) == 2 & is.numeric(dist),
@@ -104,8 +105,10 @@ donut_analysis <- function(dist,
   }
 
   if (clust == TRUE) {
-    model_fe <- do.call("feols", list(formula(paste(c(formula, fe), collapse = "|")),
-                                      data = quote(data),
+    model_fe <- do.call(what = feols,
+                        args = list(formula(paste(c(formula, fe), collapse = "|")),
+                                      # quirk in fwildclusterboot
+                                      data = data,
                                       "cluster"))
     clust <- data |>
       group_by(get(fe)) |>

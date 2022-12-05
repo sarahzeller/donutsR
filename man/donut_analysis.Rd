@@ -12,7 +12,7 @@ donut_analysis(
   fe = "id",
   dist_var = "dist_km",
   clust = TRUE,
-  bootstrap = FALSE,
+  bootstrap = TRUE,
   B = 9999,
   ...
 )
@@ -56,6 +56,7 @@ The independent variable and the population can be adjusted.
 \examples{
 library(plm)
 library(dplyr)
+library(fixest)
 data(Cigar)
 Cigar1 <- Cigar |>  mutate(dist_km = rnorm(nrow(Cigar), 20, 10)) |>  filter(dist_km >= 0)
 cigar_model1 <-

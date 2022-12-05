@@ -4,12 +4,14 @@
 \alias{get_p_data.fixest}
 \title{Get data on p-values}
 \usage{
-\method{get_p_data}{fixest}(donut_model, filter_80, ...)
+\method{get_p_data}{fixest}(donut_model, filter_80, name, ...)
 }
 \arguments{
 \item{donut_model}{Object of class \code{donut_model}}
 
 \item{filter_80}{Boolean: should the result be ignored if the treated pop. is >80\%?}
+
+\item{name}{The name of the variable to be plotted}
 }
 \description{
 Helper function, extracts data on p-values for \code{plot_significance}.
