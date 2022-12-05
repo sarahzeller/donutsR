@@ -28,12 +28,7 @@ library(dplyr)
 data(Cigar)
 Cigar <- Cigar |>  mutate(dist_km = rnorm(nrow(Cigar), 20, 10)) |>  filter(dist_km >= 0)
 cigar_models <-
-data.table::CJ(inner = 2:6, outer = (1:5)*10) |>
- data.table::transpose() |>
- lapply(donut_analysis,
-        ds = Cigar,
-        dep_var = "price",
-        indep_vars = "pop",
-        fe = "state")
+donut_models(inner = 2:4, outer = c(10, 20), ds = Cigar,
+dep_var = "dist_km", indep_vars = "pop", fe = "state")
 plot_significance(cigar_models, var = "pop")
 }

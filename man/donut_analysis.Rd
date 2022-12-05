@@ -40,6 +40,8 @@ Defaults to \code{dist_km}.}
 \item{bootstrap}{a boolean: should the standard errors for \code{dist} be bootstrapped?}
 
 \item{B}{the number of bootstraps}
+
+\item{...}{Additional arguments}
 }
 \value{
 A single \code{donut_model} object with class \code{plm} (clust = FALSE) or

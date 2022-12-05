@@ -14,7 +14,6 @@
 #' @import dplyr
 #' @importFrom tibble tibble
 #' @importFrom scales muted
-#' @importFrom fixest coeftable
 #'
 #' @export
 #' @return A ggplot2 plot
@@ -25,121 +24,84 @@
 #' data(Cigar)
 #' Cigar <- Cigar |>  mutate(dist_km = rnorm(nrow(Cigar), 20, 10)) |>  filter(dist_km >= 0)
 #' cigar_models <-
-#' data.table::CJ(inner = 2:6, outer = (1:5)*10) |>
-#'  data.table::transpose() |>
-#'  lapply(donut_analysis,
-#'         ds = Cigar,
-#'         dep_var = "price",
-#'         indep_vars = "pop",
-#'         fe = "state")
+#' donut_models(inner = 2:4, outer = c(10, 20), ds = Cigar,
+#' dep_var = "dist_km", indep_vars = "pop", fe = "state")
 #' plot_significance(cigar_models, var = "pop")
 
 
 plot_significance <- function(donut_models,
                               var,
                               filter_80 = TRUE) {
-  assert_that("radius" %in% names(donut_models[[1]]),
+  assert_that(inherits(donut_models, "donut_list"),
               msg = "Insert a list of donut_models.")
   assert_that(missing(var) == FALSE,
               msg = "Please add a variable of interest.")
 
-  if (is(donut_models[[1]], "plm")) {
+  summaries <-
+    lapply(1:length(donut_models), function(x)
+      summary(donut_models[[x]]))
+  assert_that(ifelse(is.null(summaries[[1]][["formula"]]),
+                     (summaries[[1]]$call$fml == summaries[[2]]$call$fml), # fixest
+                     (summaries[[1]]$formula == summaries[[2]]$formula)), #plm
+              msg = "Ensure that the formula is the same in each model.")
 
+  dep_var <- ifelse(is.null(summaries[[1]][["formula"]]),
+                    all.vars(summaries[[1]][["call"]])[[1]],
+                    as.character(summaries[[1]][["formula"]][[2]]))
 
-    summaries <- lapply(1:length(donut_models),
-                        function(x) summary(donut_models[[x]]))
-    dep_var <- ifelse(is.null(summaries[[1]][["formula"]]),
-                      all.vars(summaries[[1]][["call"]])[[1]],
-                      as.character(summaries[[1]][["formula"]][[2]]))
-    assert_that(summaries[[1]]$call$formula == summaries[[2]]$call$formula,
-                msg = "Ensure that the formula is the same in each model.")
+  p_value <- lapply(donut_models,
+                    get_p_data,
+                    filter_80) |>
+    do.call(rbind, args = _)
 
-    p_value <- lapply(1:length(summaries),
-                      function (x) {
-                        if ((filter_80 == TRUE &
-                             donut_models[[x]]$n_treated/donut_models[[x]]$nobs <= 0.8)|
-                            filter_80 == FALSE) {
-
-                          tibble(name = summaries[[x]][["coefficients"]] |> rownames(),
-                                 inner = donut_models[[x]][["radius"]][["inner"]],
-                                 outer = donut_models[[x]][["radius"]][["outer"]],
-                                 coefficient = summaries[[x]][["coefficients"]][, 1],
-                                 positive = coefficient >= 0,
-                                 pval = summaries[[x]][["coefficients"]][, 4],
-                                 p01 = pval < .01,
-                                 p05 = pval < .05,
-                                 p10 = pval < .1,
-                                 stars = factor(x = ifelse(p01 == TRUE, 3,
-                                                           ifelse(p05 == TRUE, 2,
-                                                                  ifelse(p10 == TRUE, 1, 0))),
-                                                levels = 3:0)
-                          )
-                        }
-                      }) |>
-      do.call(rbind, args = _)
-
-
-  } else if (is(donut_models[[1]], "fixest")) {
-    summaries <- lapply(1:length(donut_models), function(x) summary(donut_models[[x]]))
-    dep_var <- ifelse(is.null(summaries[[1]][["formula"]]),
-                      all.vars(summaries[[1]][["call"]])[[1]],
-                      as.character(summaries[[1]][["formula"]][[2]]))
-
-    assert_that(summaries[[1]]$call$fml == summaries[[2]]$call$fml,
-                msg = "Ensure that the formula is the same in each model.")
-    p_value <- lapply(1:length(summaries),
-                      function(x) {
-                        if ((filter_80 == TRUE &
-                             donut_models[[x]]$n_treated/donut_models[[x]]$nobs <= 0.8)|
-                            filter_80 == FALSE) {
-
-                          tibble(name = rownames(coeftable(donut_models[[x]])),
-                                 inner = donut_models[[x]][["radius"]][["inner"]],
-                                 outer = donut_models[[x]][["radius"]][["outer"]],
-                                 coefficient = donut_models[[x]][["coefficients"]],
-                                 positive = coefficient >= 0,
-                                 pval = coeftable(donut_models[[x]])[, 4],
-                                 p01 = pval < .01,
-                                 p05 = pval < .05,
-                                 p10 = pval < .1,
-                                 stars = factor(x = ifelse(p01 == TRUE, 3,
-                                                           ifelse(p05 == TRUE, 2,
-                                                                  ifelse(p10 == TRUE, 1, 0))),
-                                                levels = 3:0)
-                          )
-                        }
-                      }) |>
-      do.call(rbind, args = _)
-  }
-
-  lim <-  p_value[p_value$name == var,]$coefficient |> max() |> abs()
+  lim <-
+    p_value[p_value$name == var,]$coefficient |> max() |> abs()
 
   plot <-
     p_value |>
     filter(name == var) |>
-    ggplot(aes(x = inner, y = outer, col = coefficient, size = stars)) +
+    ggplot(aes(
+      x = inner,
+      y = outer,
+      col = coefficient,
+      size = stars
+    )) +
     geom_point() +
     scale_colour_gradient2(
       low = muted("red"),
       mid = "white",
       high = muted("blue"),
       midpoint = 0,
-      limits = c(-lim, lim)) +
-    labs(x = "Inner radius",
-         y = "Outer radius",
-         caption = paste("Inner radius: Treated population lives within ... km of landfill. \nOuter radius: Population lives within ... km of landfill.",
-                         ifelse(filter_80 == TRUE,
-                                "\n Note: Only regressions with \u226480% treatment shown.",
-                                "")),
-         title =  "Significance varies with inner and outer radius.",
-         subtitle = paste0("Variable of interest: ", var,
-                           ", dependent variable: ", dep_var),
-         col = "Coefficient size",
-         size = "Significance level") +
-    scale_size_manual(breaks = 3:0,
-                      labels = c( "*** p < 0.01", "** p < 0.05", "*  p < 0.1", "p >= 0.1"),
-                      values = (4:1)*2,
-                      drop = FALSE)
+      limits = c(-lim, lim)
+    ) +
+    labs(
+      x = "Inner radius",
+      y = "Outer radius",
+      caption = paste(
+        "Inner radius: Treated population lives within ... km of landfill. \nOuter radius: Population lives within ... km of landfill.",
+        ifelse(
+          filter_80 == TRUE,
+          "\n Note: Only regressions with \u226480% treatment shown.",
+          ""
+        ),
+        ifelse(
+          "bootstrap_dist" %in% names(donut_models[[1]]),
+          "Standard errors are bootstrapped.",
+          ""
+        )
+      ),
+      title =  "Significance varies with inner and outer radius.",
+      subtitle = paste0("Variable of interest: ", var,
+                        ", dependent variable: ", dep_var),
+      col = "Coefficient size",
+      size = "Significance level"
+    ) +
+    scale_size_manual(
+      breaks = 3:0,
+      labels = c("*** p < 0.01", "** p < 0.05", "*  p < 0.1", "p >= 0.1"),
+      values = (4:1) * 2,
+      drop = FALSE
+    )
   return(plot)
 
 }

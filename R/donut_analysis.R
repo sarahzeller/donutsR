@@ -17,6 +17,7 @@
 #' (FALSE, plm::plm) should be conducted.
 #' @param bootstrap a boolean: should the standard errors for `dist` be bootstrapped?
 #' @param B the number of bootstraps
+#' @param ... Additional arguments
 #'
 #' @importFrom plm plm
 #' @import dplyr
