@@ -19,10 +19,12 @@
 #' @examples
 #' library(plm)
 #' library(dplyr)
+#' library(fixest)
 #' data(Cigar)
 #' Cigar <- Cigar |>  mutate(dist_km = rnorm(nrow(Cigar), 20, 10)) |>  filter(dist_km >= 0)
 #' cigar_model <-
-#' donut_analysis(dist = c(5, 20), ds = Cigar, dep_var = "price", indep_vars = "pop", fe = "state")
+#' donut_analysis(dist = c(5, 20), ds = Cigar, dep_var = "price",
+#' indep_vars = "pop", fe = "state", clust = TRUE, bootstrap = FALSE)
 #' extract_info(cigar_model)
 
 
