@@ -15,6 +15,8 @@
 #' @param clust is a boolean, whether an analysis with clustered standard errors
 #' (TRUE, fixest::feols) or an analysis with non-clustered standard errors
 #' (FALSE, plm::plm) should be conducted.
+#' @param bootstrap a boolean: should the standard errors for `dist` be bootstrapped?
+#' @param B the number of bootstraps
 #'
 #' @importFrom plm plm
 #' @import dplyr
@@ -23,13 +25,16 @@
 #' @importFrom stats rnorm
 #' @importFrom assertthat assert_that
 #' @importFrom utils globalVariables
-#' @importFrom fixest feols
+#' @import fixest
 #' @importFrom tidyr drop_na
+#' @import fwildclusterboot
 #'
 #' @export
 #'
-#' @return A single plm model with an additional list element which contains
-#' the inner and outer radii.
+#' @return A single `donut_model` object with class `plm` (clust = FALSE) or
+#' class `fixest`. The `donut_model` has additional list element which contain
+#' the inner and outer radii and additional info.
+#' It can be plotted with the `plot_significance` function.
 #'
 #' @examples
 #' library(plm)
@@ -47,13 +52,17 @@
 #'                  fe = "state",
 #'                  dist_var = "dist_km1")
 
+
 donut_analysis <- function(dist,
                            ds,
                            dep_var,
                            indep_vars,
                            fe = "id",
                            dist_var = "dist_km",
-                           clust = TRUE) {
+                           clust = TRUE,
+                           bootstrap = FALSE,
+                           B = 9999,
+                           ...) {
   assert_that(length(dist) == 2 & is.numeric(dist),
               msg = "Please enter two numeric values for the distances.")
   assert_that(is.data.frame(ds),
@@ -64,6 +73,8 @@ donut_analysis <- function(dist,
               msg = "dep_var needs to be a single character string.")
   assert_that(is.character(dist_var) & dist_var %in% names(ds),
               msg = "Please ensure the dist_var is in the ds.")
+  assert_that((clust == FALSE & bootstrap == FALSE) | clust == TRUE,
+              msg = "Bootstrapping not possible without clustering.")
 
   if ("geometry" %in% names(ds)) {ds <- ds |> select(-geometry)}
 
@@ -109,11 +120,27 @@ donut_analysis <- function(dist,
     summary_clust <- NULL
   }
 
+  if (bootstrap == TRUE) {
+    bootstrap <- boottest(
+      model_fe,
+      param = "dist",
+      B = B,
+      clustid = fe,
+      # # use WCU
+      # impose_null = FALSE,
+      seed = 123,
+      fe = fe,
+      ...
+    )
+    model_fe[["bootstrap_dist"]] <- bootstrap
+  }
+
   #add additional info
   model_fe[["radius"]] <- c(inner = inner, outer = outer)
   model_fe[["n_treated"]] <- data |> filter(dist == TRUE) |> nrow()
   model_fe[["clust"]] <- clust
   model_fe[["summary_clust"]] <- c(n = nrow(clust),
                                    n_treated = sum(clust$treated_clust))
+  class(model_fe) <- c("donut_model", class(model_fe))
   return(model_fe)
 }

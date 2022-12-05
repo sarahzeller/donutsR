@@ -20,7 +20,9 @@ Imports:
     tidyr,
     tibble,
     scales,
-    fixest
+    fixest,
+    fwildclusterboot
+Remotes: s3alfisc/fwildclusterboot
 Suggests: 
     testthat (>= 3.0.0),
     data.table

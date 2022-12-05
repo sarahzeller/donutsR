@@ -11,7 +11,10 @@ donut_analysis(
   indep_vars,
   fe = "id",
   dist_var = "dist_km",
-  clust = TRUE
+  clust = TRUE,
+  bootstrap = FALSE,
+  B = 9999,
+  ...
 )
 }
 \arguments{
@@ -33,10 +36,16 @@ Defaults to \code{dist_km}.}
 \item{clust}{is a boolean, whether an analysis with clustered standard errors
 (TRUE, fixest::feols) or an analysis with non-clustered standard errors
 (FALSE, plm::plm) should be conducted.}
+
+\item{bootstrap}{a boolean: should the standard errors for \code{dist} be bootstrapped?}
+
+\item{B}{the number of bootstraps}
 }
 \value{
-A single plm model with an additional list element which contains
-the inner and outer radii.
+A single \code{donut_model} object with class \code{plm} (clust = FALSE) or
+class \code{fixest}. The \code{donut_model} has additional list element which contain
+the inner and outer radii and additional info.
+It can be plotted with the \code{plot_significance} function.
 }
 \description{
 Performs a single FE-models with a given data set.
