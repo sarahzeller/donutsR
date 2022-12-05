@@ -2,10 +2,12 @@
 #'
 #' Creates a custom theme for ggplot, so that all graphs have a coherent look.
 #'
-#' @import extrafont
 #' @import ggplot2
+#' @import extrafont
 #'
 #' @export
+#'
+
 
 
 ##
@@ -21,7 +23,9 @@
 # loadfonts(device = "win")
 # Sys.setenv(R_GSCMD = "C:/Program Files/gs/gs9.55.0/bin/gswin64c.exe")
 
+
 custom_theme <- function(){
+  loadfonts(device = "win")
   theme_minimal() +
     theme(text = element_text(family = "Open Sans"),
           plot.title = element_text(size = 18),
@@ -41,6 +45,4 @@ custom_theme <- function(){
           panel.grid = element_blank(),
           panel.spacing = unit(2, "lines")
           )
-  print('If the fonts do not seem embedded, run the following code:\n
-          loadfonts(device = "win")')
 }
