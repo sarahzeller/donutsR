@@ -56,18 +56,18 @@ plot_significance <- function(donut_models,
 
   lim <-
     p_value[p_value$name == var,]$coefficient |> max() |> abs()
-
   plot <-
     p_value |>
     filter(name == var) |>
     ggplot(aes(
       x = inner,
       y = outer,
-      col = coefficient,
+      fill = coefficient,
       size = stars
     )) +
-    geom_point() +
-    scale_colour_gradient2(
+    geom_point(pch = 21,
+               col = "grey50") +
+    scale_fill_gradient2(
       low = muted("red"),
       mid = "white",
       high = muted("blue"),
