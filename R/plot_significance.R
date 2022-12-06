@@ -56,6 +56,7 @@ plot_significance <- function(donut_models,
 
   lim <-
     p_value[p_value$name == var,]$coefficient |> max() |> abs()
+
   plot <-
     p_value |>
     filter(name == var) |>
@@ -86,7 +87,17 @@ plot_significance <- function(donut_models,
         ),
         ifelse(
           "bootstrap_dist" %in% names(donut_models[[1]]),
-          "Standard errors are bootstrapped.",
+          "Standard errors are cluster-bootstrapped.",
+          ""
+        ),
+        ifelse(
+          donut_models[["standard_error"]] == "conley",
+          "Standard errors are Conley-corrected.",
+          ""
+        ),
+        ifelse(
+          donut_models[["standard_error"]] == "cluster",
+          "Standard errors are clustered by landfill.",
           ""
         )
       ),
@@ -105,3 +116,4 @@ plot_significance <- function(donut_models,
   return(plot)
 
 }
+

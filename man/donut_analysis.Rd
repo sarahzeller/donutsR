@@ -11,9 +11,11 @@ donut_analysis(
   indep_vars,
   fe = "id",
   dist_var = "dist_km",
-  clust = TRUE,
-  bootstrap = TRUE,
+  se = "cluster",
+  bootstrap = FALSE,
   B = 9999,
+  lat = "lat",
+  lon = "lon",
   ...
 )
 }
@@ -33,13 +35,18 @@ The outer distance refers to the overall population: it is the cut-off value.}
 \item{dist_var}{A character referring to the distance parameter.
 Defaults to \code{dist_km}.}
 
-\item{clust}{is a boolean, whether an analysis with clustered standard errors
-(TRUE, fixest::feols) or an analysis with non-clustered standard errors
-(FALSE, plm::plm) should be conducted.}
+\item{se}{is a character, defaulting to \code{cluster}.
+It shows how to adjust standard errors: By clustering them by the \code{fe} param
+(\code{cluster}, fixest::feols),
+no adjustment, (\code{plm}, plm::plm), or with \code{conley} (\code{conley} param in fixest::feols).}
 
 \item{bootstrap}{a boolean: should the standard errors for \code{dist} be bootstrapped?}
 
 \item{B}{the number of bootstraps}
+
+\item{lat}{Latitude; needed for \code{conley}-standard errors}
+
+\item{lon}{Longitude; needed for \code{conley}-standard errors}
 
 \item{...}{Additional arguments}
 }
