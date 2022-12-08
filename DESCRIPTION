@@ -11,20 +11,22 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.1
 Imports:
     dplyr,
-    extrafont,
     ggplot2,
     assertthat,
     stringr,
     dtplyr,
-    plm,
     tidyr,
     tibble,
     scales,
-    fixest,
     fwildclusterboot,
     data.table,
     labelled,
     haven
+Depends:
+  fixest,
+  plm,
+  extrafont,
+  Rttf2pt1 (<= 1.3.8)
 Remotes: s3alfisc/fwildclusterboot
 Suggests: 
     testthat (>= 3.0.0)

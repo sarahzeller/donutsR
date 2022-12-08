@@ -112,7 +112,8 @@ plot_significance <- function(donut_models,
       labels = c("*** p < 0.01", "** p < 0.05", "*  p < 0.1", "p >= 0.1"),
       values = (4:1) * 2,
       drop = FALSE
-    )
+    ) +
+    custom_theme()
   return(plot)
 
 }

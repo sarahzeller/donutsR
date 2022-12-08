@@ -7,25 +7,26 @@
 #'
 #' @export
 #'
-
-
-
-##
-# library(extrafont)
-## If import doesn't work:
-# remove.packages("Rttf2pt1")
-# remotes::install_version("Rttf2pt1", version = "1.3.8")
-#
-# font_import(paths = "C:/Users/sarah/Documents/Fonts")
-# loadfonts(device = "win")
-# loadfonts()
-
-# loadfonts(device = "win")
-# Sys.setenv(R_GSCMD = "C:/Program Files/gs/gs9.55.0/bin/gswin64c.exe")
-
+#' @details
+#' If the fonts are not loaded, please try running the following code.
+#' `remove.packages('Rttf2pt1')`
+#' `remotes::install_version('Rttf2pt1', version = '1.3.8')``
+#' `font_import(paths = 'C:/Users/YOUR_NAME/Documents/Fonts')``
+#' `loadfonts(device = 'win')``
+#' `loadfonts()``
+#'
+#' If this still does not work, run the following line and then
+#' run the above lines again.
+#' `Sys.setenv(R_GSCMD = 'C:/Program Files/gs/gs9.55.0/bin/gswin64c.exe')`"
+#'
+#' @examples
+#' library(ggplot2)
+#' data(iris)
+#' ggplot(aes(x = Sepal.Length, y = Sepal.Width), data = iris) +
+#' geom_point() +
+#' custom_theme()
 
 custom_theme <- function(){
-  loadfonts(device = "win")
   theme_minimal() +
     theme(text = element_text(family = "Open Sans"),
           plot.title = element_text(size = 18),
