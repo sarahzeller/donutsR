@@ -91,12 +91,12 @@ plot_significance <- function(donut_models,
           ""
         ),
         ifelse(
-          donut_models[["standard_error"]] == "conley",
+          donut_models[[1]][["standard_error"]] == "conley",
           "Standard errors are Conley-corrected.",
           ""
         ),
         ifelse(
-          donut_models[["standard_error"]] == "cluster",
+          donut_models[[1]][["standard_error"]] == "cluster",
           "Standard errors are clustered by landfill.",
           ""
         )
@@ -116,4 +116,3 @@ plot_significance <- function(donut_models,
   return(plot)
 
 }
-
