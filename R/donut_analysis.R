@@ -32,6 +32,8 @@
 #' @import fixest
 #' @importFrom tidyr drop_na
 #' @import fwildclusterboot
+#' @importFrom labelled labelled
+#' @importFrom haven zap_labels
 #'
 #' @export
 #'
@@ -104,24 +106,28 @@ donut_analysis <- function(dist,
   if (dist_var == "dist_km"){
     data <- ds |>
       filter(dist_km <= outer) |>
-      mutate(dist = (dist_km <= inner) |> as.integer()) |>
+      mutate(dist = labelled(((dist_km <= inner) |> as.integer()),
+                             label = "lives close to landfill")) |>
       select(c(all.vars(formula),
                all_of(fe),
                all_of(lat),
                all_of(lon))) |>
       collect() |>
-      drop_na()
+      drop_na() |>
+      zap_labels()
 
   } else {
     data <- ds[ds[[dist_var]] <= outer,]
     data <- data |>
-      mutate(dist = (data[[dist_var]] <= inner) |> as.integer()) |>
+      mutate(dist = labelled(((dist_var <= inner) |> as.integer()),
+                             label = "lives close to landfill")) |>
       select(c(all.vars(formula),
                all_of(fe),
                all_of(lon),
                all_of(lon))) |>
       collect() |>
-      drop_na()
+      drop_na() |>
+      zap_labels()
   }
 
   if (se == "basic") {

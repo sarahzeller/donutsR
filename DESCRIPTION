@@ -22,7 +22,9 @@ Imports:
     scales,
     fixest,
     fwildclusterboot,
-    data.table
+    data.table,
+    labelled,
+    haven
 Remotes: s3alfisc/fwildclusterboot
 Suggests: 
     testthat (>= 3.0.0)
