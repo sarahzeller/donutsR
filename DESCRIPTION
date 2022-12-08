@@ -21,7 +21,9 @@ Imports:
     fwildclusterboot,
     data.table,
     labelled,
-    haven
+    haven,
+    kableExtra,
+    modelsummary
 Depends:
   fixest,
   plm,

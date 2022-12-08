@@ -16,6 +16,15 @@
 #'
 #' @return A donut_models list: `donut_list`
 #'
+#' @examples
+#' library(fixest)
+#' data(Cigar)
+#' library(dplyr)
+#' Cigar <- Cigar |>  mutate(dist_km = stats::rnorm(nrow(Cigar), 20, 10)) |>  filter(dist_km >= 0)
+#' cigar_models <-
+#' donut_models(inner = 2:4, outer = c(10, 20), ds = Cigar,
+#' dep_var = "dist_km", indep_vars = "pop", fe = "state")
+#'
 
 # convenience wrappers for donut_analysis
 donut_models <- function(inner = 3:9, outer = (1:5)*10,

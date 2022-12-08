@@ -24,3 +24,13 @@ A donut_models list: \code{donut_list}
 Performs a single FE-models with a given data set.
 The independent variable and the population can be adjusted.
 }
+\examples{
+library(fixest)
+data(Cigar)
+library(dplyr)
+Cigar <- Cigar |>  mutate(dist_km = stats::rnorm(nrow(Cigar), 20, 10)) |>  filter(dist_km >= 0)
+cigar_models <-
+donut_models(inner = 2:4, outer = c(10, 20), ds = Cigar,
+dep_var = "dist_km", indep_vars = "pop", fe = "state")
+
+}

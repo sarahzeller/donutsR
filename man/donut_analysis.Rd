@@ -61,11 +61,10 @@ Performs a single FE-models with a given data set.
 The independent variable and the population can be adjusted.
 }
 \examples{
-library(plm)
-library(dplyr)
 library(fixest)
+library(dplyr)
 data(Cigar)
-Cigar1 <- Cigar |>  mutate(dist_km = rnorm(nrow(Cigar), 20, 10)) |>  filter(dist_km >= 0)
+Cigar1 <- Cigar |>  mutate(dist_km = stats::rnorm(nrow(Cigar), 20, 10)) |>  filter(dist_km >= 0)
 cigar_model1 <-
 donut_analysis(dist = c(5, 20), ds = Cigar1, dep_var = "price", indep_vars = "pop", fe = "state")
 Cigar2 <- Cigar |>  mutate(dist_km1 = rnorm(nrow(Cigar), 20, 10)) |>  filter(dist_km1 >= 0)
