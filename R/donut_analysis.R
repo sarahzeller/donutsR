@@ -36,6 +36,7 @@
 #' @import fwildclusterboot
 #' @importFrom labelled labelled
 #' @importFrom haven zap_labels
+#' @importFrom stats na.omit
 #'
 #' @export
 #'
