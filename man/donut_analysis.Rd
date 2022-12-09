@@ -16,6 +16,7 @@ donut_analysis(
   B = 9999,
   lat = "lat",
   lon = "lon",
+  excl_largest_fe = 0,
   ...
 )
 }
@@ -47,6 +48,9 @@ no adjustment, (\code{plm}, plm::plm), or with \code{conley} (\code{conley} para
 \item{lat}{Latitude; needed for \code{conley}-standard errors}
 
 \item{lon}{Longitude; needed for \code{conley}-standard errors}
+
+\item{excl_largest_fe}{Numeric: how many of the FE with the largest number of
+observations should be excluded? Defaults to \code{NULL}.}
 
 \item{...}{Additional arguments}
 }

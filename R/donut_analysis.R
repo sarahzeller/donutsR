@@ -20,6 +20,8 @@
 #' @param B the number of bootstraps
 #' @param lat Latitude; needed for `conley`-standard errors
 #' @param lon Longitude; needed for `conley`-standard errors
+#' @param excl_largest_fe Numeric: how many of the FE with the largest number of
+#' observations should be excluded? Defaults to `NULL`.
 #' @param ... Additional arguments
 #'
 #' @importFrom plm plm
@@ -71,6 +73,7 @@ donut_analysis <- function(dist,
                            B = 9999,
                            lat = "lat",
                            lon = "lon",
+                           excl_largest_fe = 0,
                            ...) {
   assert_that(length(dist) == 2 & is.numeric(dist),
               msg = "Please enter two numeric values for the distances.")
@@ -100,6 +103,19 @@ donut_analysis <- function(dist,
     lat <- NULL
     lon <- NULL
   }
+
+  # kick out largest FE
+  if (excl_largest_fe > 0) {
+    largest_fe <- ds |>
+      group_by(across(fe)) |>
+      summarize(n_fe = n()) |>
+      na.omit() |>
+      arrange(desc(n_fe)) |>
+      pull(all_of(fe))
+    ds <- ds |>
+      filter(! get(fe) %in% largest_fe[1:exclude_largest_fe])
+  }
+
 
   formula <- reformulate(c(indep_vars, "dist"), dep_var)
 
@@ -182,6 +198,7 @@ donut_analysis <- function(dist,
   model_fe[["clust"]] <- clust
   model_fe[["summary_clust"]] <- summary_clust
   model_fe[["standard_error"]] <- paste0(se, ifelse(bootstrap, "_bs", ""))
+  model_fe[["n_excl_fe"]] <- excl_largest_fe
   class(model_fe) <- c(class(model_fe), "donut_model")
   return(model_fe)
 }
