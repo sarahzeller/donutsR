@@ -4,13 +4,23 @@
 \alias{model_summary}
 \title{Model summary table for donut_list}
 \usage{
-model_summary(donut_list, r_inner = NULL, title = NULL, hist = TRUE, ...)
+model_summary(
+  donut_list,
+  r_inner = NULL,
+  filter_80 = TRUE,
+  title = NULL,
+  hist = TRUE,
+  ...
+)
 }
 \arguments{
 \item{donut_list}{The donut_list}
 
 \item{r_inner}{The inner radius; optional. A (vector of) integers which are
 the inner radius of a \code{donut_model}. Must be in the \code{donut_list}.}
+
+\item{filter_80}{Should only regressions where treated are <=80\% be shown?
+Defaults to true.}
 
 \item{title}{Optional: a title for the summary table.
 Defaults to "Regression results (r_inner km radius)".}

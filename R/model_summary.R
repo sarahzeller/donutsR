@@ -6,6 +6,8 @@
 #' @param donut_list The donut_list
 #' @param r_inner The inner radius; optional. A (vector of) integers which are
 #' the inner radius of a `donut_model`. Must be in the `donut_list`.
+#' @param filter_80 Should only regressions where treated are <=80% be shown?
+#' Defaults to true.
 #' @param title Optional: a title for the summary table.
 #' Defaults to "Regression results (r_inner km radius)".
 #' @param hist If `donut_list` has clustered standard errors: Should a histogram of the
@@ -36,6 +38,7 @@
 
 model_summary <- function(donut_list,
                           r_inner = NULL,
+                          filter_80 = TRUE,
                           title = NULL,
                           hist = TRUE,
                           ...) {
@@ -50,16 +53,20 @@ model_summary <- function(donut_list,
   }
 
   if (is.null(r_inner) == FALSE) {
-    names <- extract_info(donut_list) |>
-      filter(inner == r_inner) |>
-      pull(name)
-    donut_list <- donut_list[names]
+    names <- extract_info(donut_list)
+    donut_list <- donut_list[which(names$inner == r_inner)]
 
     title <- paste(title,
                    paste0("(",
                           r_inner,
                           "km inner radius)"))
   }
+
+  if (filter_80 == TRUE) {
+    over_80 <- extract_info(donut_list)
+    donut_list <- donut_list[which(over_80$perc_treated <= .8)]
+  }
+
 
   names(donut_list) <- paste0("(", (1:length(donut_list)), ")")
 
