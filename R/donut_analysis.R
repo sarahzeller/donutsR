@@ -59,7 +59,8 @@
 #'                  dep_var = "price",
 #'                  indep_vars = "pop",
 #'                  fe = "state",
-#'                  dist_var = "dist_km1")
+#'                  dist_var = "dist_km1",
+#'                  excl_largest_fe = 2)
 
 
 donut_analysis <- function(dist,
@@ -113,7 +114,7 @@ donut_analysis <- function(dist,
       arrange(desc(n_fe)) |>
       pull(all_of(fe))
     ds <- ds |>
-      filter(! get(fe) %in% largest_fe[1:exclude_largest_fe])
+      filter(! get(fe) %in% largest_fe[1:excl_largest_fe])
   }
 
 
