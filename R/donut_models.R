@@ -20,6 +20,7 @@
 #' library(fixest)
 #' data(Cigar)
 #' library(dplyr)
+#' set.seed(123)
 #' Cigar <- Cigar |>  mutate(dist_km = stats::rnorm(nrow(Cigar), 20, 10)) |>  filter(dist_km >= 0)
 #' cigar_models <-
 #' donut_models(inner = 2:4, outer = c(10, 20), ds = Cigar,

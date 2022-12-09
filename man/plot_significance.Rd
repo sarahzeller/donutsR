@@ -25,6 +25,7 @@ Consider adding \code{theme(legend.text.align = 1)} to right-align the p-value l
 \examples{
 library(fixest)
 library(dplyr)
+set.seed(123)
 data(Cigar)
 Cigar <- Cigar |>
 mutate(dist_km = stats::rnorm(nrow(Cigar), 20, 10)) |>

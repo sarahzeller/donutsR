@@ -31,6 +31,7 @@ Input needs to be a list of \code{donut_analysis} models, i.e. a \code{donut_lis
 library(fixest)
 library(dplyr)
 data(Cigar)
+set.seed(123)
 Cigar <- Cigar |>
 mutate(dist_km = stats::rnorm(nrow(Cigar), 20, 10)) |>
 filter(dist_km >= 0)

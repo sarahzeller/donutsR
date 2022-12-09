@@ -21,6 +21,7 @@
 #' @examples
 #' library(fixest)
 #' library(dplyr)
+#' set.seed(123)
 #' data(Cigar)
 #' Cigar <- Cigar |>
 #' mutate(dist_km = stats::rnorm(nrow(Cigar), 20, 10)) |>

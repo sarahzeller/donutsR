@@ -64,6 +64,7 @@ The independent variable and the population can be adjusted.
 library(fixest)
 library(dplyr)
 data(Cigar)
+set.seed(123)
 Cigar1 <- Cigar |>  mutate(dist_km = stats::rnorm(nrow(Cigar), 20, 10)) |>  filter(dist_km >= 0)
 cigar_model1 <-
 donut_analysis(dist = c(5, 20), ds = Cigar1, dep_var = "price", indep_vars = "pop", fe = "state")
