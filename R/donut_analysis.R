@@ -21,7 +21,9 @@
 #' @param lat Latitude; needed for `conley`-standard errors
 #' @param lon Longitude; needed for `conley`-standard errors
 #' @param excl_largest_fe Numeric: how many of the FE with the largest number of
-#' observations should be excluded? Defaults to `NULL`.
+#' observations should be excluded? Defaults to `0`.
+#' @param excl_inner_r Numeric. If the observations that are closest to the `fe`
+#' should be omitted: in which radius should they be omitted? Defaults to `0`.
 #' @param ... Additional arguments
 #'
 #' @importFrom plm plm
@@ -54,13 +56,14 @@
 #'                indep_vars = "age",
 #'                fe = "id")
 #' model2 <-
-#'   donut_analysis(dist = c(5, 20),
+#'   donut_analysis(dist = c(8, 50),
 #'                  ds = donut_data,
 #'                  dep_var = "wealth_index",
-#'                  indep_vars = "age",
+#'                  indep_vars = c("age", "male"),
 #'                  fe = "id",
 #'                  dist_var = "dist_km",
-#'                  excl_largest_fe = 2)
+#'                  excl_largest_fe = 2,
+#'                  excl_inner_r = 1)
 
 
 donut_analysis <- function(dist,
@@ -75,6 +78,7 @@ donut_analysis <- function(dist,
                            lat = "lat",
                            lon = "lon",
                            excl_largest_fe = 0,
+                           excl_inner_r = 0,
                            ...) {
   assert_that(length(dist) == 2 & is.numeric(dist),
               msg = "Please enter two numeric values for the distances.")
@@ -94,6 +98,8 @@ donut_analysis <- function(dist,
   assert_that(se != "conley" | (se == "conley" & lat %in% names(ds) & lon %in% names(ds)),
               msg = "Please ensure you have a lat and lon variable in your dataset.
               This is needed for Conley-correcting the standard errors.")
+  assert_that(is.numeric(excl_inner_r),
+              msg = "The inner radius to be excluded, excl_inner_r, should be numeric.")
 
   if ("geometry" %in% names(ds)) {ds <- ds |> select(-geometry)}
 
@@ -115,6 +121,12 @@ donut_analysis <- function(dist,
       pull(all_of(fe))
     ds <- ds |>
       filter(! get(fe) %in% largest_fe[1:excl_largest_fe])
+  }
+
+  if (excl_inner_r > 0) {
+    ds <- ds |>
+      filter(get(dist_var) <= excl_inner_r) |>
+      collect()
   }
 
 
@@ -199,7 +211,7 @@ donut_analysis <- function(dist,
   model_fe[["clust"]] <- clust
   model_fe[["summary_clust"]] <- summary_clust
   model_fe[["standard_error"]] <- paste0(se, ifelse(bootstrap, "_bs", ""))
-  model_fe[["n_excl_fe"]] <- excl_largest_fe
+  model_fe[["excl"]] <- c(fe = excl_largest_fe, inner_r = excl_inner_r)
   class(model_fe) <- c(class(model_fe), "donut_model")
   return(model_fe)
 }

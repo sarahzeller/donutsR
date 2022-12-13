@@ -17,6 +17,7 @@ donut_analysis(
   lat = "lat",
   lon = "lon",
   excl_largest_fe = 0,
+  excl_inner_r = 0,
   ...
 )
 }
@@ -50,7 +51,10 @@ no adjustment, (\code{plm}, plm::plm), or with \code{conley} (\code{conley} para
 \item{lon}{Longitude; needed for \code{conley}-standard errors}
 
 \item{excl_largest_fe}{Numeric: how many of the FE with the largest number of
-observations should be excluded? Defaults to \code{NULL}.}
+observations should be excluded? Defaults to \code{0}.}
+
+\item{excl_inner_r}{Numeric. If the observations that are closest to the \code{fe}
+should be omitted: in which radius should they be omitted? Defaults to \code{0}.}
 
 \item{...}{Additional arguments}
 }
@@ -73,11 +77,12 @@ donut_analysis(dist = c(5, 20),
                indep_vars = "age",
                fe = "id")
 model2 <-
-  donut_analysis(dist = c(5, 20),
+  donut_analysis(dist = c(8, 50),
                  ds = donut_data,
                  dep_var = "wealth_index",
-                 indep_vars = "age",
+                 indep_vars = c("age", "male"),
                  fe = "id",
                  dist_var = "dist_km",
-                 excl_largest_fe = 2)
+                 excl_largest_fe = 2,
+                 excl_inner_r = 1)
 }
