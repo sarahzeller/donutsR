@@ -125,7 +125,7 @@ donut_analysis <- function(dist,
 
   if (excl_inner_r > 0) {
     ds <- ds |>
-      filter(get(dist_var) <= excl_inner_r) |>
+      filter(get(dist_var) > excl_inner_r) |>
       collect()
   }
 
