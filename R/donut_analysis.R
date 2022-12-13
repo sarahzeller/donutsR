@@ -46,21 +46,20 @@
 #' It can be plotted with the `plot_significance` function.
 #'
 #' @examples
-#' library(fixest)
-#' library(dplyr)
-#' data(Cigar)
-#' set.seed(123)
-#' Cigar1 <- Cigar |>  mutate(dist_km = stats::rnorm(nrow(Cigar), 20, 10)) |>  filter(dist_km >= 0)
-#' cigar_model1 <-
-#' donut_analysis(dist = c(5, 20), ds = Cigar1, dep_var = "price", indep_vars = "pop", fe = "state")
-#' Cigar2 <- Cigar |>  mutate(dist_km1 = rnorm(nrow(Cigar), 20, 10)) |>  filter(dist_km1 >= 0)
-#' cigar_model2 <-
+#' data(donut_data)
+#' model1 <-
+#' donut_analysis(dist = c(5, 20),
+#'                ds = donut_data,
+#'                dep_var = "wealth_index",
+#'                indep_vars = "age",
+#'                fe = "id")
+#' model2 <-
 #'   donut_analysis(dist = c(5, 20),
-#'                  ds = Cigar2,
-#'                  dep_var = "price",
-#'                  indep_vars = "pop",
-#'                  fe = "state",
-#'                  dist_var = "dist_km1",
+#'                  ds = donut_data,
+#'                  dep_var = "wealth_index",
+#'                  indep_vars = "age",
+#'                  fe = "id",
+#'                  dist_var = "dist_km",
 #'                  excl_largest_fe = 2)
 
 

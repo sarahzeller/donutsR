@@ -21,19 +21,12 @@
 #' @return A modelsummary object, usually a `kableExtra` table.
 #'
 #' @examples
-#' library(fixest)
-#' library(dplyr)
-#' data(Cigar)
-#' set.seed(123)
-#' Cigar <- Cigar |>
-#' mutate(dist_km = stats::rnorm(nrow(Cigar), 20, 10)) |>
-#' filter(dist_km >= 0)
-#'
-#' cigar_models <-
-#' donut_models(inner = 2:4, outer = c(10, 20), ds = Cigar,
-#' dep_var = "dist_km", indep_vars = "pop", fe = "state")
+#' data(donut_data)
+#' models <-
+#' donut_models(inner = 2:4, outer = c(10, 20), ds = donut_data,
+#' dep_var = "wealth_index", indep_vars = "age", fe = "id")
 #' table <-
-#' model_summary(donut_list = cigar_models, r_inner = 3, height = 200)
+#' model_summary(donut_list = models, r_inner = 3, height = 200)
 #'
 
 model_summary <- function(donut_list,

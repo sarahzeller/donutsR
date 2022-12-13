@@ -21,9 +21,9 @@
 #' `Sys.setenv(R_GSCMD = 'C:/Program Files/gs/gs9.55.0/bin/gswin64c.exe')`"
 #'
 #' @examples
+#' data(donut_data)
 #' library(ggplot2)
-#' data(iris)
-#' ggplot(aes(x = Sepal.Length, y = Sepal.Width), data = iris) +
+#' ggplot(aes(x = age, y = dist_km), data = donut_data) +
 #' geom_point() +
 #' custom_theme()
 

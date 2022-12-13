@@ -19,18 +19,11 @@
 #' @return A ggplot2 plot
 #'
 #' @examples
-#' library(fixest)
-#' library(dplyr)
-#' set.seed(123)
-#' data(Cigar)
-#' Cigar <- Cigar |>
-#' mutate(dist_km = stats::rnorm(nrow(Cigar), 20, 10)) |>
-#' filter(dist_km >= 0)
-#'
-#' cigar_models <-
-#' donut_models(inner = 2:4, outer = c(10, 20), ds = Cigar,
-#' dep_var = "dist_km", indep_vars = "pop", fe = "state")
-#' plot_significance(cigar_models, var = "pop")
+#' data(donut_data)
+#' models <-
+#' donut_models(inner = 2:4, outer = c(10, 15, 20), ds = donut_data,
+#' dep_var = "wealth_index", indep_vars = "age", fe = "id")
+#' plot_significance(models, var = "dist")
 
 
 plot_significance <- function(donut_models,
@@ -108,7 +101,7 @@ plot_significance <- function(donut_models,
       title =  "Significance varies with inner and outer radius.",
       subtitle = paste0("Variable of interest: ", var,
                         ", dependent variable: ", dep_var),
-      col = "Coefficient size",
+      fill = "Coefficient size",
       size = "Significance level"
     ) +
     scale_size_manual(

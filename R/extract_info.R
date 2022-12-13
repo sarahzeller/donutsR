@@ -17,15 +17,11 @@
 #' @return A tibble
 #'
 #' @examples
-#' library(plm)
-#' library(dplyr)
-#' library(fixest)
-#' data(Cigar)
-#' Cigar <- Cigar |>  mutate(dist_km = rnorm(nrow(Cigar), 20, 10)) |>  filter(dist_km >= 0)
-#' cigar_model <-
-#' donut_analysis(dist = c(5, 20), ds = Cigar, dep_var = "price",
-#' indep_vars = "pop", fe = "state", clust = TRUE, bootstrap = FALSE)
-#' extract_info(cigar_model)
+#' data(donut_data)
+#' model <-
+#' donut_analysis(dist = c(5, 20), ds = donut_data, dep_var = "wealth_index",
+#' indep_vars = "age", fe = "id", clust = TRUE, bootstrap = FALSE)
+#' extract_info(model)
 
 
 extract_info <- function(models){
@@ -35,7 +31,7 @@ extract_info <- function(models){
       vapply(1:length(models),
              function (x) models[[x]][["radius"]],
              FUN.VALUE = numeric(2)) |>
-      as_tibble(rownames = NA) |>
+      as_tibble(rownames = NA, .name_repair = "universal") |>
       rownames_to_column() |>
       pivot_longer(!rowname) |>
       pivot_wider(names_from = "rowname") |>
@@ -58,7 +54,7 @@ extract_info <- function(models){
   else if (is.null(models[["radius"]]) == FALSE){
     info <-
       models[["radius"]] |>
-      as_tibble(rownames = NA) |>
+      as_tibble(rownames = NA, .name_repair = "universal") |>
       rownames_to_column() |>
       pivot_longer(!rowname) |>
       pivot_wider(names_from = "rowname") |>

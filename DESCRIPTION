@@ -25,11 +25,13 @@ Imports:
     kableExtra,
     modelsummary
 Depends:
-  fixest,
-  plm,
-  extrafont,
-  Rttf2pt1 (<= 1.3.8)
+    fixest,
+    plm,
+    extrafont,
+    Rttf2pt1 (<= 1.3.8),
+    R (>= 2.10)
 Remotes: s3alfisc/fwildclusterboot
 Suggests: 
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
+LazyData: true
