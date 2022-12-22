@@ -31,7 +31,7 @@ extract_info <- function(models){
       vapply(1:length(models),
              function (x) models[[x]][["radius"]],
              FUN.VALUE = numeric(2)) |>
-      as_tibble(rownames = NA, .name_repair = "universal") |>
+      as_tibble(rownames = NA) |>
       rownames_to_column() |>
       pivot_longer(!rowname) |>
       pivot_wider(names_from = "rowname") |>
@@ -54,7 +54,7 @@ extract_info <- function(models){
   else if (is.null(models[["radius"]]) == FALSE){
     info <-
       models[["radius"]] |>
-      as_tibble(rownames = NA, .name_repair = "universal") |>
+      as_tibble(rownames = NA) |>
       rownames_to_column() |>
       pivot_longer(!rowname) |>
       pivot_wider(names_from = "rowname") |>
