@@ -6,6 +6,8 @@
 #' @export
 
 tidy_custom.fixest <- function(x, ...) {
+  if ("donut_list" %in% class(x)) {
+
   pval <- coeftable(x)[,4] |> format(digits = 4)
   pval[["dist"]] <- ifelse(is.null(x[["bootstrap_dist"]]),
                            pval[["dist"]],
@@ -19,4 +21,5 @@ tidy_custom.fixest <- function(x, ...) {
     p.value = pval,
     std.error = s)
   return(out)
+  }
 }

@@ -27,7 +27,9 @@
 #' dep_var = "wealth_index", indep_vars = "age", fe = "id")
 #' table <-
 #' model_summary(donut_list = models, r_inner = 3, height = 200)
-#'
+#' library(modelsummary)
+#' model_not_donut <- feols(age ~ male | id, data = donut_data, vcov = "cluster")
+#' modelsummary(model_not_donut)
 
 model_summary <- function(donut_list,
                           r_inner = NULL,
