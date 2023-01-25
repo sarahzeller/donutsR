@@ -12,10 +12,15 @@
 #' Defaults to "Regression results (r_inner km radius)".
 #' @param hist If `donut_list` has clustered standard errors: Should a histogram of the
 #' clusters be shown?
+#' @param sort_variables Should the variables be sorted so that "dist" is at the top? Logical.
+#' @param output The output of modelsummary, e.g. `kableExtra` and `modelsummary_list`.
+#' Note that `modelsummary_list` gets additional list elements so the input information
+#' does not get lost.
 #' @param ... Optional arguments for histogram and modelsummary
 #'
 #' @import modelsummary
 #' @importFrom assertthat assert_that
+#' @importFrom labelled var_label
 #'
 #' @export
 #' @return A modelsummary object, usually a `kableExtra` table.
@@ -37,16 +42,24 @@
 #' model_summary(models_list, r_inner = 3)
 
 model_summary <- function(donut_list,
-                          r_inner = NULL,
                           filter_80 = TRUE,
                           title = NULL,
                           hist = TRUE,
+                          r_inner = NULL,
+                          sort_variables = TRUE,
+                          output,
                           ...) {
   assert_that(inherits(donut_list[[1]], "donut_model"),
               msg = "Please choose a donut_list object.")
-  assert_that(missing(r_inner) | (is.numeric(r_inner) & r_inner > 0 & r_inner <= 20),
+  assert_that(ifelse(missing(r_inner),
+                     TRUE,
+                     (is.numeric(r_inner) & r_inner > 0 & r_inner <= 20)),
               msg = "Please ensure that your inner radius is part of the
               donut_list regressions.")
+
+  if (is.null(title)) {
+    title <- "Regression results"
+  }
 
   if (filter_80 == TRUE) {
     over_80 <- extract_info(donut_list)
@@ -56,15 +69,9 @@ model_summary <- function(donut_list,
   names <- extract_info(donut_list)
 
   if (is.null(r_inner) == TRUE) {
-    # automatically set r_inner to largest possible radius
     r_inner <- names$inner |> max()
   }
   donut_list <- donut_list[which(names$inner == r_inner)]
-
-  # set title
-  if (is.null(title)) {
-    title <- "Regression results"
-  }
 
   title <- paste(title,
                  paste0("(",
@@ -73,18 +80,65 @@ model_summary <- function(donut_list,
 
   names(donut_list) <- paste0("(", (1:length(donut_list)), ")")
 
-  modelsummary(
-    donut_list,
-    stars = TRUE,
-    coef_rename = TRUE,
-    gof_omit = "IC|RMSE|Adj|Within",
-    add_rows = info_rows(donut_list,
-                         hist,
-                         ...),
-    notes = ifelse(donut_list[[1]][["standard_error"]] == "cluster_bs",
-                   "The dist p-values are bootstrapped, so std. errors are not applicable.",
-                   ""),
-    title = title,
-    ...
-  )
+  if (sort_variables == TRUE) {
+    vars <- var_label(donut_list[[1]]$call$data, unlist = TRUE)
+    # replace those without labels
+    vars[vars == ""] <- names(donut_list[[1]]$call$data)[vars == ""] |>
+      gsub("_", " ", x = _)
+    # kick those out that aren't in the first formula (-dependent variable)
+    vars <- vars[names(vars) %in% all.vars(donut_list[[1]]$fml[-1])]
+    # sort them so "dist" is up front
+    if ("dist" %in% names(vars)) {
+    vars <- c("dist" = vars[["dist"]],
+              vars[names(vars) != "dist"])
+    }
+  } else {
+    vars <- NULL
+  }
+
+  if (ifelse(missing(output),
+             TRUE,
+             output != "modelsummary_list")) {
+    modelsummary(
+      donut_list,
+      stars = TRUE,
+      gof_omit = "IC|RMSE|Adj|Within|FE|Std",
+      add_rows = info_rows(donut_list,
+                           hist,
+                           ...
+                           ),
+      notes = ifelse(
+        "standard_error" %in% names(donut_list[[1]]),
+        ifelse(
+          donut_list[[1]][["standard_error"]] == "cluster_bs",
+          "P-values are bootstrapped, so std. errors are not applicable.",
+          ""
+        ),
+        ""
+      ),
+      title = title,
+      coef_map = vars,
+      ...
+    )
+  } else {
+    out <- modelsummary(
+      donut_list,
+      ...
+    )
+    out$gof_omit <- "IC|RMSE|Adj|Within|FE|Std"
+    out$rows <- info_rows(donut_list,
+                          hist,
+                          ...)
+    out$title <- title
+    out$notes <- ifelse("standard_error" %in% names(donut_list[[1]]),
+                        ifelse(
+                          donut_list[[1]][["standard_error"]] == "cluster_bs",
+                          "The dist p-values are bootstrapped, so std. errors are not applicable.",
+                          ""
+                        ),
+                        ""
+    )
+    out$vars <- vars
+    return(out)
+  }
 }

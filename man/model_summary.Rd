@@ -6,18 +6,17 @@
 \usage{
 model_summary(
   donut_list,
-  r_inner = NULL,
   filter_80 = TRUE,
   title = NULL,
   hist = TRUE,
+  r_inner = NULL,
+  sort_variables = TRUE,
+  output,
   ...
 )
 }
 \arguments{
 \item{donut_list}{The donut_list}
-
-\item{r_inner}{The inner radius; optional. A (vector of) integers which are
-the inner radius of a \code{donut_model}. Must be in the \code{donut_list}.}
 
 \item{filter_80}{Should only regressions where treated are <=80\% be shown?
 Defaults to true.}
@@ -27,6 +26,15 @@ Defaults to "Regression results (r_inner km radius)".}
 
 \item{hist}{If \code{donut_list} has clustered standard errors: Should a histogram of the
 clusters be shown?}
+
+\item{r_inner}{The inner radius; optional. A (vector of) integers which are
+the inner radius of a \code{donut_model}. Must be in the \code{donut_list}.}
+
+\item{sort_variables}{Should the variables be sorted so that "dist" is at the top? Logical.}
+
+\item{output}{The output of modelsummary, e.g. \code{kableExtra} and \code{modelsummary_list}.
+Note that \code{modelsummary_list} gets additional list elements so the input information
+does not get lost.}
 
 \item{...}{Optional arguments for histogram and modelsummary}
 }
