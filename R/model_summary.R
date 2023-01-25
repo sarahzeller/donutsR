@@ -44,29 +44,32 @@ model_summary <- function(donut_list,
                           ...) {
   assert_that(inherits(donut_list[[1]], "donut_model"),
               msg = "Please choose a donut_list object.")
-  assert_that(is.numeric(r_inner) & r_inner > 0 & r_inner <= 20,
+  assert_that(missing(r_inner) | (is.numeric(r_inner) & r_inner > 0 & r_inner <= 20),
               msg = "Please ensure that your inner radius is part of the
               donut_list regressions.")
-
-  if (is.null(title)) {
-    title <- "Regression results"
-  }
-
-  if (is.null(r_inner) == FALSE) {
-    names <- extract_info(donut_list)
-    donut_list <- donut_list[which(names$inner == r_inner)]
-
-    title <- paste(title,
-                   paste0("(",
-                          r_inner,
-                          "km inner radius)"))
-  }
 
   if (filter_80 == TRUE) {
     over_80 <- extract_info(donut_list)
     donut_list <- donut_list[which(over_80$perc_treated <= .8)]
   }
 
+  names <- extract_info(donut_list)
+
+  if (is.null(r_inner) == TRUE) {
+    # automatically set r_inner to largest possible radius
+    r_inner <- names$inner |> max()
+  }
+  donut_list <- donut_list[which(names$inner == r_inner)]
+
+  # set title
+  if (is.null(title)) {
+    title <- "Regression results"
+  }
+
+  title <- paste(title,
+                 paste0("(",
+                        r_inner,
+                        "km inner radius)"))
 
   names(donut_list) <- paste0("(", (1:length(donut_list)), ")")
 
