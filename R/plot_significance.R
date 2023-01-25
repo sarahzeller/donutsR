@@ -8,6 +8,10 @@
 #' @param var The dependent variable in all `donut_analysis` models which should be plotted.
 #' @param filter_80 Boolean: Should only those regressions be displayed for which
 #' the treatment group is >= 80% of the whole population? Defaults to `TRUE`.
+#' @param p_value Alternative to `donut_models`: already ready p-value data set.
+#' @param dep_var If `p_value` param is chosen: dependent variable. Character.
+#' @param se If `p_value` is chosen: How standard errors are corrected. Character.
+#' @param ... additional parameters to be passed to `ggplot`
 #'
 #' @import ggplot2
 #' @importFrom assertthat assert_that
@@ -23,16 +27,32 @@
 #' models <-
 #' donut_models(inner = 2:4, outer = c(10, 15, 20), ds = donut_data,
 #' dep_var = "wealth_index", indep_vars = "age", fe = "id")
-#' plot_significance(models, var = "dist")
+#' plot <- plot_significance(models, var = "dist")
+#' plot
+#' plot$data |> plot_significance(p_value = _, var = "dist", dep_var = "wealth_index",
+#' se = "Clustered standard errors.")
 
 
 plot_significance <- function(donut_models,
                               var,
-                              filter_80 = TRUE) {
-  assert_that(inherits(donut_models, "donut_list"),
+                              filter_80 = TRUE,
+                              p_value,
+                              dep_var,
+                              se = NULL,
+                              ...) {
+  assert_that(ifelse(missing(donut_models),
+                     TRUE,
+                     inherits(donut_models, "donut_list")),
               msg = "Insert a list of donut_models.")
+  assert_that(ifelse(missing(p_value),
+                     TRUE,
+                     is.data.frame(p_value)),
+              msg = "Please insert a data.frame with the p-values.")
   assert_that(missing(var) == FALSE,
               msg = "Please add a variable of interest.")
+
+  if (missing(p_value)) {
+
 
   summaries <-
     lapply(1:length(donut_models), function(x)
@@ -51,6 +71,15 @@ plot_significance <- function(donut_models,
                     filter_80) |>
     do.call(rbind, args = _)
 
+  se <- ifelse(sum(p_value$pval != p_value$pval_bs) > 0,
+              "Standard errors are cluster-bootstrapped. ",
+              ifelse(donut_models[[1]][["standard_error"]] == "conley",
+                     "Standard errors are Conley-corrected. ",
+              ifelse(donut_models[[1]][["standard_error"]] == "cluster",
+                      "Standard errors are clustered by landfill. ",
+                     "")))
+  }
+
   lim <-
     p_value[p_value$name == var,]$coefficient |> max() |> abs()
 
@@ -62,7 +91,8 @@ plot_significance <- function(donut_models,
       y = outer,
       fill = coefficient,
       size = stars
-    )) +
+    ),
+    ...) +
     geom_point(pch = 21,
                col = "grey50") +
     scale_fill_gradient2(
@@ -79,24 +109,10 @@ plot_significance <- function(donut_models,
         "Inner radius: Treated population lives within ... km of landfill. \nOuter radius: Population lives within ... km of landfill. ",
         ifelse(
           filter_80 == TRUE,
-          "\n Note: Only regressions with \u226480% treatment shown.",
+          "\n Note: Only regressions with \u226480% treatment shown. ",
           ""
         ),
-        ifelse(
-          "bootstrap_dist" %in% names(donut_models[[1]]),
-          "Standard errors are cluster-bootstrapped.",
-          ""
-        ),
-        ifelse(
-          donut_models[[1]][["standard_error"]] == "conley",
-          "Standard errors are Conley-corrected.",
-          ""
-        ),
-        ifelse(
-          donut_models[[1]][["standard_error"]] == "cluster",
-          "Standard errors are clustered by landfill.",
-          ""
-        )
+        se
       ),
       # title =  "Significance varies with inner and outer radius.",
       subtitle = paste0("Variable of interest: ", var,
