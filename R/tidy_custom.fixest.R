@@ -16,8 +16,7 @@ tidy_custom.fixest <- function (x, ...)
     s <- coeftable(x)[, 2]
     s[["dist"]] <- ifelse(is.null(x[["bootstrap_dist"]]),
                           s[["dist"]], NA_integer_)
-    labels <- var_label(x$call$data, unlist = TRUE)
-    out <- data.frame(term = labels[names(pval)],
+    out <- data.frame(term = names(pval),
                       p.value = pval,
                       std.error = s)
     return(out)
