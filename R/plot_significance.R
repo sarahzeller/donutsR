@@ -75,8 +75,8 @@ plot_significance <- function(donut_models,
     labs(
       x = "Inner radius",
       y = "Outer radius",
-      caption = paste(
-        "Inner radius: Treated population lives within ... km of landfill. \nOuter radius: Population lives within ... km of landfill.",
+      caption = paste0(
+        "Inner radius: Treated population lives within ... km of landfill. \nOuter radius: Population lives within ... km of landfill. ",
         ifelse(
           filter_80 == TRUE,
           "\n Note: Only regressions with \u226480% treatment shown.",
@@ -98,7 +98,7 @@ plot_significance <- function(donut_models,
           ""
         )
       ),
-      title =  "Significance varies with inner and outer radius.",
+      # title =  "Significance varies with inner and outer radius.",
       subtitle = paste0("Variable of interest: ", var,
                         ", dependent variable: ", dep_var),
       fill = "Coefficient size",
@@ -106,7 +106,7 @@ plot_significance <- function(donut_models,
     ) +
     scale_size_manual(
       breaks = 3:0,
-      labels = c("*** p < 0.01", "** p < 0.05", "*  p < 0.1", "p >= 0.1"),
+      labels = c("*** p < 0.01", "** p < 0.05", "*  p < 0.1", "p \u2265 0.1"),
       values = (4:1) * 2,
       drop = FALSE
     ) +
