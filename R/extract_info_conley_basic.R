@@ -16,7 +16,7 @@ extract_info_conley_basic <- function(donut_model, ...) {
     mutate(n_treated = paste0(n_treated, " (", round(perc_treated, 2), "%)")) |>
     select(outer, n_treated) |>
     transpose()
-  rows <- cbind(names = c("Outer radius [km]",
+  rows <- cbind(names = c("Outer radius (km)",
                           "Num. treated (%)"),
                 rows)
   return(rows)

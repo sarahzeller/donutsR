@@ -20,7 +20,7 @@ extract_info_clust <- function(donut_model,
     select(outer, n_treated, n_clust_w_treated) |>
     transpose()
   rows <- cbind(names = c(
-    "Outer radius [km]",
+    "Outer radius (km)",
     "Num. treated (%)",
     "Num. clusters (treated cl.)"
   ),
