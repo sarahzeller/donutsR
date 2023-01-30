@@ -18,6 +18,9 @@
 #' @import dplyr
 #' @importFrom tibble tibble
 #' @importFrom scales muted
+#' @import sarahsFunctions
+#' @import extrafont
+#' @import Rttf2pt1
 #'
 #' @export
 #' @return A ggplot2 plot
@@ -126,7 +129,7 @@ plot_significance <- function(donut_models,
       values = (4:1) * 2,
       drop = FALSE
     ) +
-    custom_theme()
+    clean_theme()
   return(plot)
 
 }
