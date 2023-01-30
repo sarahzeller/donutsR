@@ -13,7 +13,6 @@ Imports:
     dplyr,
     ggplot2,
     assertthat,
-    stringr,
     dtplyr,
     tidyr,
     tibble,
@@ -27,8 +26,6 @@ Imports:
 Depends:
     fixest,
     plm,
-    extrafont,
-    Rttf2pt1 (<= 1.3.8),
     R (>= 2.10)
 Remotes: s3alfisc/fwildclusterboot
 Suggests: 
