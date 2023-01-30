@@ -1,10 +1,10 @@
-Package: myFunctions
-Title: Miscallaneous custom functions
+Package: donutsR
+Title: Running donut analyses
 Version: 1.0.0.0
 Date: 2020-10-24
 Authors@R: 
     person("Sarah", "Zeller", , "sarah.zeller@tu-dresden.de", role = c("aut", "cre"))
-Description: These are some functions I often use.
+Description: With this package, you can run donut analyses: regressions with a distance parameter, which is used to create treatment dummies, and to determine the population.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
