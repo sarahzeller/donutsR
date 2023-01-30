@@ -1,7 +1,13 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-# myFunctions
-A set of R functions that I use often.
+# donutsR
+A set of R functions that complement my masters thesis.
+There, I analyze the effect of landfills on the nearby population.
+Since I do not know how close people should live to a landfill to be considered close, I use a parameter: inner radius.
+To exclude population that lives too far from any landfill, I use another parameter: outer radius.
+With this package, I can create `donut_lists`: lists of regressions with varying inner and outer radius.
+There are also functions to interpret the regressions.
+
 
 ## Installation
 
@@ -9,9 +15,6 @@ A set of R functions that I use often.
 
 ## Functions
 
--   `convert_to_qmd_table` converts a `data.frame` or `tibble` to a `qmd` table.
--   `custom_theme` is the theme I use for ggplots.
--   `ggsave_embed` enables saving ggplots with embedded fonts to PDF.
 -   `donut_analysis` is the first step in a donut analysis.
 -   `plot_significance` and `extract_dist` are convenience functions for `donut_analysis` outputs.
 
@@ -19,5 +22,5 @@ A set of R functions that I use often.
 Now follow two distance parameters in `dist`. 
 The first defines the inner radius, i.e. the distance that is still defined as a treatment. 
 The second defines the outer radius, i.e. how far the entire population is allowed to be from the relevant geometry.
-The function then performs a `plm` regression and outputs the model, which includes an additional list element with the two distance parameters.  
+The function then performs a `feols` regression and outputs the model, which includes an additional list element with the two distance parameters.  
 This function can be combined with `vapply` to produce regressions with varying inner and outer radius. 
