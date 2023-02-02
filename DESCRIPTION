@@ -1,7 +1,7 @@
 Package: donutsR
 Title: Running donut analyses
 Version: 1.0.0.0
-Date: 2020-10-24
+Date: 2023-02-02
 Authors@R: 
     person("Sarah", "Zeller", , "sarah.zeller@tu-dresden.de", role = c("aut", "cre"))
 Description: With this package, you can run donut analyses: regressions with a distance parameter, which is used to create treatment dummies, and to determine the population.
