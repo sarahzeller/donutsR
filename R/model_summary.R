@@ -13,6 +13,7 @@
 #' @param hist If `donut_list` has clustered standard errors: Should a histogram of the
 #' clusters be shown?
 #' @param sort_variables Should the variables be sorted so that "dist" is at the top? Logical.
+#' Currently, this is supported for all `se` options but "basic".
 #' @param output The output of modelsummary, e.g. `kableExtra` and `modelsummary_list`.
 #' Note that `modelsummary_list` gets additional list elements so the input information
 #' does not get lost.
@@ -40,6 +41,9 @@
 #' model_summary(model_w_bootstrap, r_inner = 4)
 #' models_list <- list(model_w_bootstrap, models) |> unlist(recursive = FALSE)
 #' model_summary(models_list, r_inner = 3)
+#' models_basic <- donut_models(inner = 2:4, outer = c(10, 20), ds = donut_data,
+#' dep_var = "wealth_index", indep_vars = "age", fe = "id", se = "basic")
+#' model_summary(models_basic, sort_variables = TRUE)
 
 model_summary <- function(donut_list,
                           filter_80 = TRUE,
@@ -80,20 +84,8 @@ model_summary <- function(donut_list,
 
   names(donut_list) <- paste0("(", (1:length(donut_list)), ")")
 
-  if (sort_variables == TRUE) {
-    vars <- var_label(donut_list[[1]]$call$data, unlist = TRUE)
-    # replace those without labels
-    vars[vars == ""] <- names(donut_list[[1]]$call$data)[vars == ""] |>
-      gsub("_", " ", x = _)
-    # kick those out that aren't in the first formula (-dependent variable)
-    vars <- vars[names(vars) %in% all.vars(donut_list[[1]]$fml[-1])] |>
-      # turn them to sentence case
-      sentence_case()
-    # sort them so "dist" is up front
-    if ("dist" %in% names(vars)) {
-    vars <- c("dist" = vars[["dist"]],
-              vars[names(vars) != "dist"])
-    }
+  if (sort_variables == TRUE & donut_list[[1]][["standard_error"]] != "basic") {
+    vars <- sorted_vars(donut_list)
   } else {
     vars <- NULL
   }

@@ -30,7 +30,8 @@ clusters be shown?}
 \item{r_inner}{The inner radius; optional. A (vector of) integers which are
 the inner radius of a \code{donut_model}. Must be in the \code{donut_list}.}
 
-\item{sort_variables}{Should the variables be sorted so that "dist" is at the top? Logical.}
+\item{sort_variables}{Should the variables be sorted so that "dist" is at the top? Logical.
+Currently, this is supported for all \code{se} options but "basic".}
 
 \item{output}{The output of modelsummary, e.g. \code{kableExtra} and \code{modelsummary_list}.
 Note that \code{modelsummary_list} gets additional list elements so the input information
