@@ -66,6 +66,14 @@
 #'                  dist_var = "dist_km",
 #'                  excl_largest_fe = 2,
 #'                  excl_inner_r = 1)
+#' model_basic <-
+#'   donut_analysis(dist = c(8, 50),
+#'                  ds = donut_data,
+#'                  dep_var = "wealth_index",
+#'                  indep_vars = c("age", "male"),
+#'                  fe = "id",
+#'                  dist_var = "dist_km",
+#'                  se = "basic")
 
 
 donut_analysis <- function(dist,
