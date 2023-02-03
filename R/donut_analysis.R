@@ -24,6 +24,8 @@
 #' observations should be excluded? Defaults to `0`.
 #' @param excl_inner_r Numeric. If the observations that are closest to the `fe`
 #' should be omitted: in which radius should they be omitted? Defaults to `0`.
+#' @param treatment_label Character. The label for the treatment variable created for
+#' the combination of inner and outer radius. Defaults to "Lives close to landfill"
 #' @param ... Additional arguments
 #'
 #' @importFrom plm plm
@@ -79,6 +81,7 @@ donut_analysis <- function(dist,
                            lon = "lon",
                            excl_largest_fe = 0,
                            excl_inner_r = 0,
+                           treatment_label = "Lives close to landfill",
                            ...) {
   assert_that(length(dist) == 2 & is.numeric(dist),
               msg = "Please enter two numeric values for the distances.")
@@ -136,7 +139,7 @@ donut_analysis <- function(dist,
     data <- ds |>
       filter(dist_km <= outer) |>
       mutate(dist = labelled(((dist_km <= inner) |> as.integer()),
-                             label = "lives close to landfill")) |>
+                             label = treatment_label)) |>
       select(c(all.vars(formula),
                all_of(fe),
                all_of(lat),

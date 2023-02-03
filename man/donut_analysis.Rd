@@ -18,6 +18,7 @@ donut_analysis(
   lon = "lon",
   excl_largest_fe = 0,
   excl_inner_r = 0,
+  treatment_label = "Lives close to landfill",
   ...
 )
 }
@@ -55,6 +56,9 @@ observations should be excluded? Defaults to \code{0}.}
 
 \item{excl_inner_r}{Numeric. If the observations that are closest to the \code{fe}
 should be omitted: in which radius should they be omitted? Defaults to \code{0}.}
+
+\item{treatment_label}{Character. The label for the treatment variable created for
+the combination of inner and outer radius. Defaults to "Lives close to landfill"}
 
 \item{...}{Additional arguments}
 }
