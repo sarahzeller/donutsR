@@ -86,7 +86,9 @@ model_summary <- function(donut_list,
     vars[vars == ""] <- names(donut_list[[1]]$call$data)[vars == ""] |>
       gsub("_", " ", x = _)
     # kick those out that aren't in the first formula (-dependent variable)
-    vars <- vars[names(vars) %in% all.vars(donut_list[[1]]$fml[-1])]
+    vars <- vars[names(vars) %in% all.vars(donut_list[[1]]$fml[-1])] |>
+      # turn them to sentence case
+      sentence_case()
     # sort them so "dist" is up front
     if ("dist" %in% names(vars)) {
     vars <- c("dist" = vars[["dist"]],
