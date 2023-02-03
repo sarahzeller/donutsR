@@ -163,18 +163,17 @@ donut_analysis <- function(dist,
   }
 
   if (se == "basic") {
-    model_fe <- do.call('plm',
-                        list(formula,
-                             data = quote(data),
-                             index = fe,
-                             model = "within"))
+    model_fe <- do.call('feols',
+                        list(
+                          paste(c(formula, fe), collapse = "|") |> formula(),
+                          data = quote(data)))
     clust <- NULL
     summary_clust <- NULL
 
   } else if (se == "cluster") {
     model_fe <- do.call("feols", list(formula(paste(c(formula, fe), collapse = "|")),
                                       data = data,
-                                      "cluster"))
+                                      vcov = "cluster"))
     clust <- data |>
       group_by(get(fe)) |>
       summarize(clust_size = n(), treated_clust = !sum(dist) == 0)

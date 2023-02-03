@@ -60,9 +60,7 @@ plot_significance <- function(donut_models,
   summaries <-
     lapply(1:length(donut_models), function(x)
       summary(donut_models[[x]]))
-  assert_that(ifelse(is.null(summaries[[1]][["formula"]]),
-                     (summaries[[1]]$call$fml == summaries[[2]]$call$fml), # fixest
-                     (summaries[[1]]$formula == summaries[[2]]$formula)), #plm
+  assert_that(summaries[[1]]$call$fml == summaries[[2]]$call$fml,
               msg = "Ensure that the formula is the same in each model.")
 
   dep_var <- ifelse(is.null(summaries[[1]][["formula"]]),
