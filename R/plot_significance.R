@@ -126,7 +126,7 @@ plot_significance <- function(donut_models,
     scale_size_manual(
       breaks = 3:0,
       labels = c("*** p < 0.01", "** p < 0.05", "*  p < 0.1", "p \u2265 0.1"),
-      values = (4:1) * 2,
+      values = c(4:2, 0.5) * 2,
       drop = FALSE
     ) +
     clean_theme()
