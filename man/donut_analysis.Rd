@@ -40,8 +40,8 @@ Defaults to \code{dist_km}.}
 
 \item{se}{is a character, defaulting to \code{cluster}.
 It shows how to adjust standard errors: By clustering them by the \code{fe} param
-(\code{cluster}, fixest::feols),
-no adjustment, (\code{plm}, plm::plm), or with \code{conley} (\code{conley} param in fixest::feols).}
+(\code{cluster}), no adjustment, (\code{basic}), or with \code{conley} (\code{conley}).
+All regressions rely on \code{fixest}.}
 
 \item{bootstrap}{a boolean: should the standard errors for \code{dist} be bootstrapped?}
 
@@ -63,10 +63,11 @@ the combination of inner and outer radius. Defaults to "Lives close to landfill"
 \item{...}{Additional arguments}
 }
 \value{
-A single \code{donut_model} object with class \code{plm} (clust = FALSE) or
-class \code{fixest}. The \code{donut_model} has additional list element which contain
+A single \code{donut_model} object with class \code{fixest}.
+The \code{donut_model} has additional list element which contain
 the inner and outer radii and additional info.
-It can be plotted with the \code{plot_significance} function.
+It can be plotted with the \code{plot_significance} function, and showed as table
+with \code{model_summary}.
 }
 \description{
 Performs a single FE-models with a given data set.

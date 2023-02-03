@@ -14,8 +14,8 @@
 #' Defaults to `dist_km`.
 #' @param se is a character, defaulting to `cluster`.
 #' It shows how to adjust standard errors: By clustering them by the `fe` param
-#' (`cluster`, fixest::feols),
-#' no adjustment, (`plm`, plm::plm), or with `conley` (`conley` param in fixest::feols).
+#' (`cluster`), no adjustment, (`basic`), or with `conley` (`conley`).
+#' All regressions rely on `fixest`.
 #' @param bootstrap a boolean: should the standard errors for `dist` be bootstrapped?
 #' @param B the number of bootstraps
 #' @param lat Latitude; needed for `conley`-standard errors
@@ -28,7 +28,6 @@
 #' the combination of inner and outer radius. Defaults to "Lives close to landfill"
 #' @param ... Additional arguments
 #'
-#' @importFrom plm plm
 #' @import dplyr
 #' @import dtplyr
 #' @importFrom stats reformulate
@@ -44,10 +43,11 @@
 #'
 #' @export
 #'
-#' @return A single `donut_model` object with class `plm` (clust = FALSE) or
-#' class `fixest`. The `donut_model` has additional list element which contain
+#' @return A single `donut_model` object with class `fixest`.
+#' The `donut_model` has additional list element which contain
 #' the inner and outer radii and additional info.
-#' It can be plotted with the `plot_significance` function.
+#' It can be plotted with the `plot_significance` function, and showed as table
+#' with `model_summary`.
 #'
 #' @examples
 #' data(donut_data)
