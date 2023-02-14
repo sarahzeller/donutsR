@@ -34,7 +34,6 @@ Remotes:
     szeller42/sarahsFunctions
 Suggests: 
     testthat (>= 3.0.0),
-    pkgdown
 Config/testthat/edition: 3
 LazyData: true
 URL: https://szeller42.github.io/donutsR/
