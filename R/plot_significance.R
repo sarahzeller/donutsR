@@ -20,7 +20,6 @@
 #' @importFrom scales muted
 #' @import sarahsFunctions
 #' @import extrafont
-#' @import Rttf2pt1
 #'
 #' @export
 #' @return A ggplot2 plot
