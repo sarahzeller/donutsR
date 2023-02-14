@@ -36,3 +36,4 @@ Suggests:
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
 LazyData: true
+URL: https://szeller42.github.io/donutsR/
