@@ -1,7 +1,6 @@
-#' Sarah's custom functions
-#' Often used functions.
+#' Running donut analyses
 #' @docType package
-#' @name myFunctions
+#' @name donutsR
 #' @author Sarah Zeller
 
 "_PACKAGE"
