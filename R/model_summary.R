@@ -127,6 +127,7 @@ model_summary <- function(donut_list,
   } else {
     out <- modelsummary(
       donut_list,
+      output = output,
       ...
     )
     out$gof_omit <- "IC|RMSE|Adj|Within|FE|Std"
