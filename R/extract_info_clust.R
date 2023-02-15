@@ -6,6 +6,7 @@
 #' @importFrom dplyr select
 #' @importFrom data.table transpose
 #' @importFrom kableExtra spec_hist
+#' @importFrom tidyselect starts_with
 #'
 #' @keywords internal
 #' @export
@@ -15,6 +16,7 @@ extract_info_clust <- function(donut_model,
                                ...) {
   rows <- extract_info(donut_model) |>
     mutate(perc_treated = n_treated / n_obs * 100) |>
+    mutate_at(vars(starts_with("n_")), ~format(., big.mark = ",")) |>
     mutate(n_treated = paste0(n_treated, " (", round(perc_treated, 2), ")")) |>
     mutate(n_clust_w_treated = paste0(n_clust, " (", n_clust_treated, ")")) |>
     select(outer, n_treated, n_clust_w_treated) |>

@@ -5,6 +5,7 @@
 #' @importFrom dplyr mutate
 #' @importFrom dplyr select
 #' @importFrom data.table transpose
+#' @importFrom tidyselect starts_with
 #'
 #' @keywords internal
 #' @export
@@ -13,6 +14,7 @@
 extract_info_conley_basic <- function(donut_model, ...) {
   rows <- extract_info(donut_model) |>
     mutate(perc_treated = n_treated / n_obs * 100) |>
+    mutate_at(vars(starts_with("n_")), ~format(., big.mark = ",")) |>
     mutate(n_treated = paste0(n_treated, " (", round(perc_treated, 2), ")")) |>
     select(outer, n_treated) |>
     transpose()
