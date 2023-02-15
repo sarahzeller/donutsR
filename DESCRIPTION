@@ -23,7 +23,8 @@ Imports:
     haven,
     kableExtra,
     modelsummary,
-    sarahsFunctions
+    sarahsFunctions,
+    tidyselect
 Depends:
     fixest,
     R (>= 2.10),
