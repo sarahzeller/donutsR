@@ -12,6 +12,7 @@ model_summary(
   r_inner = NULL,
   sort_variables = TRUE,
   output,
+  format_numbers = TRUE,
   ...
 )
 }
@@ -36,6 +37,8 @@ Currently, this is supported for all \code{se} options but "basic".}
 \item{output}{The output of modelsummary, e.g. \code{kableExtra} and \code{modelsummary_list}.
 Note that \code{modelsummary_list} gets additional list elements so the input information
 does not get lost.}
+
+\item{format_numbers}{Logical. Should numbers be formatted so that the thousands are separated by a comma?}
 
 \item{...}{Optional arguments for histogram and modelsummary}
 }

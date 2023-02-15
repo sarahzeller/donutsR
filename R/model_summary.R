@@ -17,6 +17,7 @@
 #' @param output The output of modelsummary, e.g. `kableExtra` and `modelsummary_list`.
 #' Note that `modelsummary_list` gets additional list elements so the input information
 #' does not get lost.
+#' @param format_numbers Logical. Should numbers be formatted so that the thousands are separated by a comma?
 #' @param ... Optional arguments for histogram and modelsummary
 #'
 #' @import modelsummary
@@ -52,6 +53,7 @@ model_summary <- function(donut_list,
                           r_inner = NULL,
                           sort_variables = TRUE,
                           output,
+                          format_numbers = TRUE,
                           ...) {
   assert_that(inherits(donut_list[[1]], "donut_model"),
               msg = "Please choose a donut_list object.")
@@ -90,6 +92,13 @@ model_summary <- function(donut_list,
     vars <- NULL
   }
 
+  if (format_numbers == TRUE) {
+    f1 <- function(x) format(round(x, 3), big.mark=",")
+    gof_tidy <- list(
+      list("raw" = "nobs", "clean" = "Num. Observations", "fmt" = f1),
+      list("raw" = "r.squared", "clean" = "$R^2$", "fmt" = 3))
+  } else {gof_tidy <- NULL}
+
   if (ifelse(missing(output),
              TRUE,
              output != "modelsummary_list")) {
@@ -97,6 +106,7 @@ model_summary <- function(donut_list,
       donut_list,
       stars = TRUE,
       gof_omit = "IC|RMSE|Adj|Within|FE|Std",
+      gof_map = gof_tidy,
       add_rows = info_rows(donut_list,
                            hist,
                            ...
