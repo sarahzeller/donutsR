@@ -15,16 +15,18 @@ extract_info_clust <- function(donut_model,
                                hist = TRUE,
                                ...) {
   rows <- extract_info(donut_model) |>
-    mutate(perc_treated = n_treated / n_obs * 100) |>
+    mutate(perc_treated = (n_treated / n_obs * 100) |> round(2)) |>
     mutate_at(vars(starts_with("n_")), ~format(., big.mark = ",")) |>
-    mutate(n_treated = paste0(n_treated, " (", round(perc_treated, 2), ")")) |>
-    mutate(n_clust_w_treated = paste0(n_clust, " (", n_clust_treated, ")")) |>
-    select(outer, n_treated, n_clust_w_treated) |>
+    mutate(perc_treated = paste0("(", perc_treated, ")")) |>
+    mutate(n_clust_treated = paste0("(", n_clust_treated, ")")) |>
+    select(outer, n_treated, perc_treated, n_clust, n_clust_treated) |>
     transpose()
   rows <- cbind(names = c(
-    "Outer radius (km)",
-    "Num. treated (%)",
-    "Num. clusters (treated cl.)"
+    "Outer radius in km",
+    "Treated (%)",
+    " ",
+    "Clusters (treated)",
+    "  "
   ),
   rows)
 
