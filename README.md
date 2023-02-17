@@ -1,4 +1,7 @@
+<!-- badges: start -->
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![R-CMD-check](https://github.com/szeller42/myFunctions/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/szeller42/myFunctions/actions/workflows/R-CMD-check.yaml)
+<!-- badges: end -->
 
 # donutsR
 
