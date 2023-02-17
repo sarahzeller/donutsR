@@ -24,16 +24,14 @@ Imports:
     kableExtra,
     modelsummary,
     sarahsFunctions,
-    tidyselect
+    tidyselect,
 Depends:
     fixest,
-    R (>= 2.10),
-    extrafont
+    R (>= 2.10)
 Remotes: 
     s3alfisc/fwildclusterboot,
     szeller42/sarahsFunctions
 Suggests: 
-    Rttf2pt1 (<= 1.3.8),
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
 LazyData: true

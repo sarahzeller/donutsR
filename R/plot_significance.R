@@ -19,7 +19,6 @@
 #' @importFrom tibble tibble
 #' @importFrom scales muted
 #' @import sarahsFunctions
-#' @import extrafont
 #'
 #' @export
 #' @return A ggplot2 plot
