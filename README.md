@@ -6,28 +6,42 @@
 # donutsR
 
 A set of R functions that complement my masters thesis.
+
 There, I analyze the effect of landfills on the nearby population.
-Since I do not know how close people should live to a landfill to be considered close, I use a parameter: inner radius.
-To exclude population that lives too far from any landfill, I use another parameter: outer radius.
-With this package, I can create `donut_lists`: lists of regressions with varying inner and outer radius.
+I vary 2 parameters:
+
+-   *inner radius*\
+    defines the dummy variable of interest, *living close to a landfill*. 
+-   *outer radius*\
+    excludes population that lives too far from any landfill.
+    
+    
+With this package, one can create `donut_list`s: lists of regressions with varying inner and outer radius.
 There are also functions to interpret the regressions.
 
+
 ## Installation
+
+Run the following line in `R` to install this package:
 
 `remotes::install_github("szeller42/donutsR")`
 
 ## Functions
 
--   `donut_analysis` is the first step in a donut analysis.
--   `plot_significance` and `extract_dist` are convenience functions for `donut_analysis` outputs.
+-   `donut_models` creates a `donut_list`. 
+-   `plot_significance` plots the summary for one parameter of interest.
+-   `donut_summary` outputs a `modelsummary` table, specifically tailored to `donut_models`.
 
-`donut_analysis` takes a data frame with a distance parameter `dist_km` which includes the distance to a relevant geometry for all or some rows.
-Now follow two distance parameters in `dist`.
-The first defines the inner radius, i.e. the distance that is still defined as a treatment.
-The second defines the outer radius, i.e. how far the entire population is allowed to be from the relevant geometry.
-The function then performs a `feols` regression and outputs the model, which includes an additional list element with the two distance parameters.\
+`donut_models` takes a data frame with a distance parameter `dist_km`, which determines the distance to a relevant geometry for all or some rows.
+It also takes two distance vectors: for the inner radius (`inner`) and the outer (`outer`).
+The function then performs a `feols` regression with clustered standard errors.
+It outputs a `donut_list`, which includes additional list element with the distance parameters.
+Additional parameters can be used for the following robustness checks:
 
-This function can be combined with `vapply` to produce regressions with varying inner and outer radius.
+-   Landfill-cluster-bootstrapped standard errors for the treatment dummy
+-   Conley standard errors for all independent variables
+-   Excluding the $n$ largest clusters
+-   Excluding observations within $k$ distance-units of the landfills
 
 ## Application
 
