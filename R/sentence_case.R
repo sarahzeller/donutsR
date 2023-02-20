@@ -1,4 +1,4 @@
-#' Helper function for model_summary
+#' Helper function for donut_summary
 #'
 #' Turns character vectors to sentence case, and retains the names.
 #'

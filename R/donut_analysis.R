@@ -47,7 +47,7 @@
 #' The `donut_model` has additional list element which contain
 #' the inner and outer radii and additional info.
 #' It can be plotted with the `plot_significance` function, and showed as table
-#' with `model_summary`.
+#' with `donut_summary`.
 #'
 #' @examples
 #' data(donut_data)

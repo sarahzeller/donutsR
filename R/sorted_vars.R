@@ -1,4 +1,4 @@
-#' Helper function for model_summary
+#' Helper function for donut_summary
 #'
 #' Prettifies variables and their labels, and sorts them so "dist" is up front
 #'

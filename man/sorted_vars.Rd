@@ -2,7 +2,7 @@
 % Please edit documentation in R/sorted_vars.R
 \name{sorted_vars}
 \alias{sorted_vars}
-\title{Helper function for model_summary}
+\title{Helper function for donut_summary}
 \usage{
 sorted_vars(donut_list)
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/sentence_case.R
 \name{sentence_case}
 \alias{sentence_case}
-\title{Helper function for model_summary}
+\title{Helper function for donut_summary}
 \usage{
 sentence_case(x)
 }
