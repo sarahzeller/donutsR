@@ -4,7 +4,7 @@
 \alias{info_rows}
 \title{Helper function for modelsummary}
 \usage{
-info_rows(donut_model, hist = TRUE, ...)
+info_rows(donut_model, hist = TRUE, footnote = FALSE, ...)
 }
 \description{
 Extracts infos from \code{donut_list}

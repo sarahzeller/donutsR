@@ -23,6 +23,8 @@
 #' @import modelsummary
 #' @importFrom assertthat assert_that
 #' @importFrom labelled var_label
+#' @importFrom kableExtra footnote_marker_number
+#' @importFrom kableExtra footnote
 #'
 #' @export
 #' @return A modelsummary object, usually a `kableExtra` table.
@@ -55,6 +57,7 @@ donut_summary <- function(donut_list,
                           output,
                           format_numbers = TRUE,
                           ...) {
+  # assertions
   assert_that(inherits(donut_list[[1]], "donut_model"),
               msg = "Please choose a donut_list object.")
   assert_that(ifelse(missing(r_inner),
@@ -63,10 +66,8 @@ donut_summary <- function(donut_list,
               msg = "Please ensure that your inner radius is part of the
               donut_list regressions.")
 
-  if (is.null(title)) {
-    title <- "Regression results"
-  }
 
+  # filter data
   if (filter_80 == TRUE) {
     over_80 <- extract_info(donut_list)
     donut_list <- donut_list[which(over_80$perc_treated <= .8)]
@@ -79,13 +80,14 @@ donut_summary <- function(donut_list,
   }
   donut_list <- donut_list[which(names$inner == r_inner)]
 
+  # title
+  if (is.null(title)) {title <- "Regression results"}
   title <- paste(title,
-                 paste0("(",
-                        r_inner,
-                        "km inner radius)"))
+                 paste0("(", r_inner, "km inner radius)"))
 
   names(donut_list) <- paste0("(", (1:length(donut_list)), ")")
 
+  # sort vars
   if (sort_variables == TRUE & donut_list[[1]][["standard_error"]] != "basic") {
     vars <- sorted_vars(donut_list)
   } else {
@@ -93,57 +95,54 @@ donut_summary <- function(donut_list,
   }
 
   if (format_numbers == TRUE) {
-    f1 <- function(x) format(round(x, 3), big.mark=",")
-    gof_tidy <- list(
-      list("raw" = "nobs", "clean" = "Num. Observations", "fmt" = f1),
-      list("raw" = "r.squared", "clean" = "$R^2$", "fmt" = 3))
+    gof_tidy <- format_numbers()
   } else {gof_tidy <- NULL}
 
+  # add info on clusters and treated
+  rows <- info_rows(donut_list, hist = FALSE)
+  if ("Clusters" %in% rows$term) {
+    footnote_numbers <-
+      c(
+        "Numbers in brackets refer to the treated percentage",
+        "Numbers in brackets refer to the number of treated clusters"
+      )
+  } else {
+    footnote_numbers <-
+      c("Numbers in brackets refer to the treated percentage")
+  }
+  if (donut_list[[1]][["standard_error"]] == "cluster_bs") {
+    footnote_bs <-
+      "P-values for the treatment status are bootstrapped, so standard errors are not applicable."
+  } else {
+    footnote_bs <- NULL
+  }
+
+  # create table
   if (ifelse(missing(output),
              TRUE,
              output != "modelsummary_list")) {
+
     modelsummary(
       donut_list,
       stars = TRUE,
       gof_omit = "IC|RMSE|Adj|Within|FE|Std",
       gof_map = gof_tidy,
-      add_rows = info_rows(donut_list,
-                           hist,
-                           ...
-                           ),
-      notes = ifelse(
-        "standard_error" %in% names(donut_list[[1]]),
-        ifelse(
-          donut_list[[1]][["standard_error"]] == "cluster_bs",
-          "P-values are bootstrapped, so std. errors are not applicable.",
-          ""
-        ),
-        ""
-      ),
+      add_rows = info_rows(donut_list, hist, footnote = TRUE, ...),
       title = title,
       coef_map = vars,
       ...
-    )
+    ) |>
+      footnote(general = paste("Numbers in parentheses refer to standard errors.",
+                           footnote_bs),
+               number = footnote_numbers)
   } else {
-    out <- modelsummary(
-      donut_list,
-      output = output,
-      ...
-    )
-    out$gof_omit <- "IC|RMSE|Adj|Within|FE|Std"
-    out$rows <- info_rows(donut_list,
-                          hist,
-                          ...)
-    out$title <- title
-    out$notes <- ifelse("standard_error" %in% names(donut_list[[1]]),
-                        ifelse(
-                          donut_list[[1]][["standard_error"]] == "cluster_bs",
-                          "The dist p-values are bootstrapped, so std. errors are not applicable.",
-                          ""
-                        ),
-                        ""
-    )
-    out$vars <- vars
-    return(out)
+    make_modelsummary_list(donut_list = donut_list,
+                           output = output,
+                           hist = hist,
+                           title = title,
+                           vars = vars,
+                           footnote_numbers = footnote_numbers,
+                           footnote_bs = footnote_bs,
+                           ...)
   }
 }
