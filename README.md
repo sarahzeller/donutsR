@@ -15,6 +15,7 @@ I vary 2 parameters:
 -   *outer radius*\
     excludes population that lives too far from any landfill.
     
+![](man/figures/radii.png)
     
 With this package, one can create `donut_list`s: lists of regressions with varying inner and outer radius.
 There are also functions to interpret the regressions.
