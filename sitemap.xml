@@ -22,6 +22,9 @@
     <loc>https://szeller42.github.io/donutsR/reference/donut_models.html</loc>
   </url>
   <url>
+    <loc>https://szeller42.github.io/donutsR/reference/donut_summary.html</loc>
+  </url>
+  <url>
     <loc>https://szeller42.github.io/donutsR/reference/donutsR.html</loc>
   </url>
   <url>
@@ -47,9 +50,6 @@
   </url>
   <url>
     <loc>https://szeller42.github.io/donutsR/reference/info_rows.html</loc>
-  </url>
-  <url>
-    <loc>https://szeller42.github.io/donutsR/reference/model_summary.html</loc>
   </url>
   <url>
     <loc>https://szeller42.github.io/donutsR/reference/plot_significance.html</loc>

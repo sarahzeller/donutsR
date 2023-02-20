@@ -54,10 +54,22 @@
 <div class="section level1">
 <div class="page-header"><h1 id="donutsr">donutsR<a class="anchor" aria-label="anchor" href="#donutsr"></a>
 </h1></div>
-<p>A set of R functions that complement my masters thesis. There, I analyze the effect of landfills on the nearby population. Since I do not know how close people should live to a landfill to be considered close, I use a parameter: inner radius. To exclude population that lives too far from any landfill, I use another parameter: outer radius. With this package, I can create <code>donut_lists</code>: lists of regressions with varying inner and outer radius. There are also functions to interpret the regressions.</p>
+<p>A set of R functions that complement my masters thesis.</p>
+<p>There, I analyze the effect of landfills on the nearby population. I vary 2 parameters:</p>
+<ul>
+<li>
+<em>inner radius</em><br>
+defines the dummy variable of interest, <em>living close to a landfill</em>.</li>
+<li>
+<em>outer radius</em><br>
+excludes population that lives too far from any landfill.</li>
+</ul>
+<p><img src="reference/figures/radii.png"></p>
+<p>With this package, one can create <code>donut_list</code>s: lists of regressions with varying inner and outer radius. There are also functions to interpret the regressions.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
+<p>Run the following line in <code>R</code> to install this package:</p>
 <p><code>remotes::install_github("szeller42/donutsR")</code></p>
 </div>
 <div class="section level2">
@@ -65,12 +77,19 @@
 </h2>
 <ul>
 <li>
-<code>donut_analysis</code> is the first step in a donut analysis.</li>
+<code>donut_models</code> creates a <code>donut_list</code>.</li>
 <li>
-<code>plot_significance</code> and <code>extract_dist</code> are convenience functions for <code>donut_analysis</code> outputs.</li>
+<code>plot_significance</code> plots the summary for one parameter of interest.</li>
+<li>
+<code>donut_summary</code> outputs a <code>modelsummary</code> table, specifically tailored to <code>donut_models</code>.</li>
 </ul>
-<p><code>donut_analysis</code> takes a data frame with a distance parameter <code>dist_km</code> which includes the distance to a relevant geometry for all or some rows. Now follow two distance parameters in <code>dist</code>. The first defines the inner radius, i.e. the distance that is still defined as a treatment. The second defines the outer radius, i.e. how far the entire population is allowed to be from the relevant geometry. The function then performs a <code>feols</code> regression and outputs the model, which includes an additional list element with the two distance parameters.<br></p>
-<p>This function can be combined with <code>vapply</code> to produce regressions with varying inner and outer radius.</p>
+<p><code>donut_models</code> takes a data frame with a distance parameter <code>dist_km</code>, which determines the distance to a relevant geometry for all or some rows. It also takes two distance vectors: for the inner radius (<code>inner</code>) and the outer (<code>outer</code>). The function then performs a <code>feols</code> regression with clustered standard errors. It outputs a <code>donut_list</code>, which includes additional list element with the distance parameters. Additional parameters can be used for the following robustness checks:</p>
+<ul>
+<li>Landfill-cluster-bootstrapped standard errors for the treatment dummy</li>
+<li>Conley standard errors for all independent variables</li>
+<li>Excluding the <span class="math inline"><em>n</em></span> largest clusters</li>
+<li>Excluding observations within <span class="math inline"><em>k</em></span> distance-units of the landfills</li>
+</ul>
 </div>
 <div class="section level2">
 <h2 id="application">Application<a class="anchor" aria-label="anchor" href="#application"></a>
