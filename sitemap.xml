@@ -37,6 +37,9 @@
     <loc>https://szeller42.github.io/donutsR/reference/extract_info_conley_basic.html</loc>
   </url>
   <url>
+    <loc>https://szeller42.github.io/donutsR/reference/format_numbers.html</loc>
+  </url>
+  <url>
     <loc>https://szeller42.github.io/donutsR/reference/get_p_data.fixest.html</loc>
   </url>
   <url>
@@ -50,6 +53,9 @@
   </url>
   <url>
     <loc>https://szeller42.github.io/donutsR/reference/info_rows.html</loc>
+  </url>
+  <url>
+    <loc>https://szeller42.github.io/donutsR/reference/make_modelsummary_list.html</loc>
   </url>
   <url>
     <loc>https://szeller42.github.io/donutsR/reference/plot_significance.html</loc>

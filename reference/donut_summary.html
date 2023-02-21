@@ -187,7 +187,7 @@ does not get lost.</p></dd>
 <span class="r-in"><span><span class="va">model_w_bootstrap</span> <span class="op">&lt;-</span> <span class="fu"><a href="donut_models.html">donut_models</a></span><span class="op">(</span>inner <span class="op">=</span> <span class="fl">2</span><span class="op">:</span><span class="fl">4</span>, outer <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">20</span><span class="op">)</span>, ds <span class="op">=</span> <span class="va">donut_data</span>,</span></span>
 <span class="r-in"><span>dep_var <span class="op">=</span> <span class="st">"wealth_index"</span>, indep_vars <span class="op">=</span> <span class="st">"age"</span>, fe <span class="op">=</span> <span class="st">"id"</span>, bootstrap <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">donut_summary</span><span class="op">(</span><span class="va">model_w_bootstrap</span>, r_inner <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;table style="NAborder-bottom: 0; width: auto !important; margin-left: auto; margin-right: auto;" class="table"&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;table style="NAborder-bottom: 0; width: auto !important; margin-left: auto; margin-right: auto;border-bottom: 0;" class="table"&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;caption&gt;Regression results (4km inner radius)&lt;/caption&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  &lt;thead&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   &lt;tr&gt;</span>
@@ -228,24 +228,24 @@ does not get lost.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;td style="text-align:center;"&gt; 20 &lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   &lt;/tr&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   &lt;tr&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;td style="text-align:left;"&gt; Treated (%) &lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;td style="text-align:left;"&gt; Treated&lt;sup&gt;1&lt;/sup&gt; &lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;td style="text-align:center;"&gt; 1,804 &lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;td style="text-align:center;"&gt; 1,804 &lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   &lt;/tr&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   &lt;tr&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;td style="text-align:left;"&gt;  &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;td style="text-align:center;"&gt; (26.91) &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;td style="text-align:center;"&gt; (5.86) &lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;td style="text-align:center;"&gt; [26.91] &lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;td style="text-align:center;"&gt; [5.86] &lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   &lt;/tr&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   &lt;tr&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;td style="text-align:left;"&gt; Clusters (treated) &lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;td style="text-align:left;"&gt; Clusters&lt;sup&gt;2&lt;/sup&gt; &lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;td style="text-align:center;"&gt; 20 &lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;td style="text-align:center;"&gt; 20 &lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   &lt;/tr&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   &lt;tr&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;td style="text-align:left;"&gt;  &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;td style="text-align:center;"&gt; (20) &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;td style="text-align:center;"&gt; (20) &lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;td style="text-align:center;"&gt; [20] &lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;td style="text-align:center;"&gt; [20] &lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   &lt;/tr&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   &lt;tr&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;td style="text-align:left;"&gt; Cluster histogram &lt;/td&gt;</span>
@@ -327,16 +327,21 @@ does not get lost.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;/svg&gt; &lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   &lt;/tr&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;/tbody&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;tfoot&gt;&lt;tr&gt;&lt;td style="padding: 0; " colspan="100%"&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;sup&gt;&lt;/sup&gt; + p &amp;lt; 0.1, * p &amp;lt; 0.05, ** p &amp;lt; 0.01, *** p &amp;lt; 0.001&lt;/td&gt;&lt;/tr&gt;&lt;/tfoot&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;tfoot&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;tr&gt;&lt;td style="padding: 0; " colspan="100%"&gt;&lt;span style="font-style: italic;"&gt;Note: &lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;tr&gt;&lt;td style="padding: 0; " colspan="100%"&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;sup&gt;&lt;/sup&gt; + p &amp;lt; 0.1, * p &amp;lt; 0.05, ** p &amp;lt; 0.01, *** p &amp;lt; 0.001&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;sup&gt;&lt;/sup&gt; Numbers in parentheses refer to standard errors. P-values for the treatment status are bootstrapped, so standard errors are not applicable.&lt;/td&gt;&lt;/tr&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;tr&gt;&lt;td style="padding: 0; " colspan="100%"&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;sup&gt;&lt;/sup&gt; P-values are bootstrapped, so std. errors are not applicable.&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;sup&gt;1&lt;/sup&gt; Numbers in brackets refer to the treated percentage&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;tr&gt;&lt;td style="padding: 0; " colspan="100%"&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;sup&gt;2&lt;/sup&gt; Numbers in brackets refer to the number of treated clusters&lt;/td&gt;&lt;/tr&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;/tfoot&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;/table&gt;</span>
 <span class="r-in"><span><span class="va">models_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">model_w_bootstrap</span>, <span class="va">models</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span>recursive <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">donut_summary</span><span class="op">(</span><span class="va">models_list</span>, r_inner <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;table style="NAborder-bottom: 0; width: auto !important; margin-left: auto; margin-right: auto;" class="table"&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;table style="NAborder-bottom: 0; width: auto !important; margin-left: auto; margin-right: auto;border-bottom: 0;" class="table"&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;caption&gt;Regression results (3km inner radius)&lt;/caption&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  &lt;thead&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   &lt;tr&gt;</span>
@@ -398,7 +403,7 @@ does not get lost.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;td style="text-align:center;"&gt; 20 &lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   &lt;/tr&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   &lt;tr&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;td style="text-align:left;"&gt; Treated (%) &lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;td style="text-align:left;"&gt; Treated&lt;sup&gt;1&lt;/sup&gt; &lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;td style="text-align:center;"&gt; 1,389 &lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;td style="text-align:center;"&gt; 1,389 &lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;td style="text-align:center;"&gt; 1,389 &lt;/td&gt;</span>
@@ -406,13 +411,13 @@ does not get lost.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   &lt;/tr&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   &lt;tr&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;td style="text-align:left;"&gt;  &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;td style="text-align:center;"&gt; (20.72) &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;td style="text-align:center;"&gt; (4.52) &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;td style="text-align:center;"&gt; (20.72) &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;td style="text-align:center;"&gt; (4.52) &lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;td style="text-align:center;"&gt; [20.72] &lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;td style="text-align:center;"&gt; [4.52] &lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;td style="text-align:center;"&gt; [20.72] &lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;td style="text-align:center;"&gt; [4.52] &lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   &lt;/tr&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   &lt;tr&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;td style="text-align:left;"&gt; Clusters (treated) &lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;td style="text-align:left;"&gt; Clusters&lt;sup&gt;2&lt;/sup&gt; &lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;td style="text-align:center;"&gt; 20 &lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;td style="text-align:center;"&gt; 20 &lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;td style="text-align:center;"&gt; 20 &lt;/td&gt;</span>
@@ -420,10 +425,10 @@ does not get lost.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   &lt;/tr&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   &lt;tr&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;td style="text-align:left;"&gt;  &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;td style="text-align:center;"&gt; (20) &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;td style="text-align:center;"&gt; (20) &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;td style="text-align:center;"&gt; (20) &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;td style="text-align:center;"&gt; (20) &lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;td style="text-align:center;"&gt; [20] &lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;td style="text-align:center;"&gt; [20] &lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;td style="text-align:center;"&gt; [20] &lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;td style="text-align:center;"&gt; [20] &lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   &lt;/tr&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   &lt;tr&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;td style="text-align:left;"&gt; Cluster histogram &lt;/td&gt;</span>
@@ -581,17 +586,22 @@ does not get lost.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;/svg&gt; &lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   &lt;/tr&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;/tbody&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;tfoot&gt;&lt;tr&gt;&lt;td style="padding: 0; " colspan="100%"&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;sup&gt;&lt;/sup&gt; + p &amp;lt; 0.1, * p &amp;lt; 0.05, ** p &amp;lt; 0.01, *** p &amp;lt; 0.001&lt;/td&gt;&lt;/tr&gt;&lt;/tfoot&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;tfoot&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;tr&gt;&lt;td style="padding: 0; " colspan="100%"&gt;&lt;span style="font-style: italic;"&gt;Note: &lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;tr&gt;&lt;td style="padding: 0; " colspan="100%"&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;sup&gt;&lt;/sup&gt; + p &amp;lt; 0.1, * p &amp;lt; 0.05, ** p &amp;lt; 0.01, *** p &amp;lt; 0.001&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;sup&gt;&lt;/sup&gt; Numbers in parentheses refer to standard errors. P-values for the treatment status are bootstrapped, so standard errors are not applicable.&lt;/td&gt;&lt;/tr&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;tr&gt;&lt;td style="padding: 0; " colspan="100%"&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;sup&gt;&lt;/sup&gt; P-values are bootstrapped, so std. errors are not applicable.&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;sup&gt;1&lt;/sup&gt; Numbers in brackets refer to the treated percentage&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;tr&gt;&lt;td style="padding: 0; " colspan="100%"&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;sup&gt;2&lt;/sup&gt; Numbers in brackets refer to the number of treated clusters&lt;/td&gt;&lt;/tr&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;/tfoot&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;/table&gt;</span>
 <span class="r-in"><span><span class="va">models_basic</span> <span class="op">&lt;-</span> <span class="fu"><a href="donut_models.html">donut_models</a></span><span class="op">(</span>inner <span class="op">=</span> <span class="fl">2</span><span class="op">:</span><span class="fl">4</span>, outer <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">20</span><span class="op">)</span>, ds <span class="op">=</span> <span class="va">donut_data</span>,</span></span>
 <span class="r-in"><span>dep_var <span class="op">=</span> <span class="st">"wealth_index"</span>, indep_vars <span class="op">=</span> <span class="st">"age"</span>, fe <span class="op">=</span> <span class="st">"id"</span>, se <span class="op">=</span> <span class="st">"basic"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">donut_summary</span><span class="op">(</span><span class="va">models_basic</span>, sort_variables <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;table style="NAborder-bottom: 0; width: auto !important; margin-left: auto; margin-right: auto;" class="table"&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;table style="NAborder-bottom: 0; width: auto !important; margin-left: auto; margin-right: auto;border-bottom: 0;" class="table"&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;caption&gt;Regression results (4km inner radius)&lt;/caption&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  &lt;thead&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   &lt;tr&gt;</span>
@@ -637,21 +647,24 @@ does not get lost.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;td style="text-align:center;"&gt; 20 &lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   &lt;/tr&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   &lt;tr&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;td style="text-align:left;"&gt; Treated (%) &lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;td style="text-align:left;"&gt; Treated&lt;sup&gt;1&lt;/sup&gt; &lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;td style="text-align:center;"&gt; 1,804 &lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;td style="text-align:center;"&gt; 1,804 &lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   &lt;/tr&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   &lt;tr&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;td style="text-align:left;"&gt;  &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;td style="text-align:center;"&gt; (26.91) &lt;/td&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;td style="text-align:center;"&gt; (5.86) &lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;td style="text-align:center;"&gt; [26.91] &lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;td style="text-align:center;"&gt; [5.86] &lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   &lt;/tr&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;/tbody&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;tfoot&gt;&lt;tr&gt;&lt;td style="padding: 0; " colspan="100%"&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;sup&gt;&lt;/sup&gt; + p &amp;lt; 0.1, * p &amp;lt; 0.05, ** p &amp;lt; 0.01, *** p &amp;lt; 0.001&lt;/td&gt;&lt;/tr&gt;&lt;/tfoot&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;tfoot&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;tr&gt;&lt;td style="padding: 0; " colspan="100%"&gt;&lt;span style="font-style: italic;"&gt;Note: &lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;tr&gt;&lt;td style="padding: 0; " colspan="100%"&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;sup&gt;&lt;/sup&gt; + p &amp;lt; 0.1, * p &amp;lt; 0.05, ** p &amp;lt; 0.01, *** p &amp;lt; 0.001&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;sup&gt;&lt;/sup&gt; Numbers in parentheses refer to standard errors. &lt;/td&gt;&lt;/tr&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;tr&gt;&lt;td style="padding: 0; " colspan="100%"&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;sup&gt;&lt;/sup&gt; &lt;/td&gt;&lt;/tr&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;sup&gt;1&lt;/sup&gt; Numbers in brackets refer to the treated percentage&lt;/td&gt;&lt;/tr&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;/tfoot&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;/table&gt;</span>
 </code></pre></div>
