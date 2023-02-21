@@ -14,7 +14,7 @@
 #' Defaults to `dist_km`.
 #' @param se is a character, defaulting to `cluster`.
 #' It shows how to adjust standard errors: By clustering them by the `fe` param
-#' (`cluster`), no adjustment, (`basic`), or with `conley` (`conley`).
+#' (`cluster`), no adjustment, (`basic`), or with Conley (`conley`).
 #' All regressions rely on `fixest`.
 #' @param bootstrap a boolean: should the standard errors for `dist` be bootstrapped?
 #' @param B the number of bootstraps

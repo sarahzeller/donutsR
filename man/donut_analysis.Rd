@@ -40,7 +40,7 @@ Defaults to \code{dist_km}.}
 
 \item{se}{is a character, defaulting to \code{cluster}.
 It shows how to adjust standard errors: By clustering them by the \code{fe} param
-(\code{cluster}), no adjustment, (\code{basic}), or with \code{conley} (\code{conley}).
+(\code{cluster}), no adjustment, (\code{basic}), or with Conley (\code{conley}).
 All regressions rely on \code{fixest}.}
 
 \item{bootstrap}{a boolean: should the standard errors for \code{dist} be bootstrapped?}
