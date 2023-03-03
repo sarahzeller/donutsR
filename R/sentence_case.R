@@ -9,6 +9,13 @@ sentence_case <- function(x) {
   x_labels <- names(x)
   new_x <- paste0(substr(x, 1, 1) |> toupper(),
                   substr(x, 2, nchar(x)) |> tolower())
-  names(new_x) <- x_labels
+
+  # title case for Global Human Footprint
+  new_x <- ifelse(tolower(new_x) == "global human footprint",
+                  "Global Human Footprint",
+                  new_x)
+  names(new_x) <- ifelse(tolower(x_labels) == "global human footprint",
+                         "Global Human Footprint",
+                         x_labels)
   return(new_x)
 }
