@@ -200,15 +200,16 @@ donut_analysis <- function(dist,
   }
 
   if (bootstrap == TRUE & se == "cluster") {
+    set.seed(123)
 
     bootstrap_se <- boottest(
       model_fe,
       param = "dist",
       B = B,
       clustid = fe,
+      sampling = "standard",
       # # use WCU
       # impose_null = FALSE,
-      seed = 123,
       fe = fe,
       ...
     )

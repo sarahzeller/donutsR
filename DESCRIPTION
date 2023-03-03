@@ -17,7 +17,7 @@ Imports:
     tidyr,
     tibble,
     scales,
-    fwildclusterboot,
+    fwildclusterboot (>= 0.13),
     data.table,
     labelled,
     haven,
