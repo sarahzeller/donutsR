@@ -11,7 +11,7 @@ With this package, you can run donut analyses: regressions with a distance param
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://szeller42.github.io/donutsR/}
+  \item \url{https://sarahzeller.github.io/donutsR/}
 }
 
 }

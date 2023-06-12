@@ -1,6 +1,6 @@
 <!-- badges: start -->
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![R-CMD-check](https://github.com/szeller42/myFunctions/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/szeller42/myFunctions/actions/workflows/R-CMD-check.yaml)
+[![R-CMD-check](https://github.com/sarahzeller/donutsR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/sarahzeller/donutsR/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 # donutsR
@@ -25,7 +25,7 @@ There are also functions to interpret the regressions.
 
 Run the following line in `R` to install this package:
 
-`remotes::install_github("szeller42/donutsR")`
+`remotes::install_github("sarahzeller/donutsR")`
 
 ## Functions
 
