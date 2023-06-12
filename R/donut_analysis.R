@@ -9,6 +9,7 @@
 #' @param ds The dataset.
 #' @param dep_var The dependent variable in the regression
 #' @param indep_vars a character vector of independent variables. Must be part of `ds`.
+#' @param weights a numeric vector for weights. Must be part of `ds`.
 #' @param fe a character vector of Fixed Effects variables. Must be part of `ds`.
 #' @param dist_var A character referring to the distance parameter.
 #' Defaults to `dist_km`.
@@ -80,6 +81,7 @@ donut_analysis <- function(dist,
                            ds,
                            dep_var,
                            indep_vars,
+                           weights = NULL,
                            fe = "id",
                            dist_var = "dist_km",
                            se = "cluster",
@@ -174,13 +176,15 @@ donut_analysis <- function(dist,
     model_fe <- do.call('feols',
                         list(
                           paste(c(formula, fe), collapse = "|") |> formula(),
-                          data = quote(data)))
+                          data = quote(data),
+                          weights = weights))
     clust <- NULL
     summary_clust <- NULL
 
   } else if (se == "cluster") {
     model_fe <- do.call("feols", list(formula(paste(c(formula, fe), collapse = "|")),
                                       data = data,
+                                      weights = weights,
                                       vcov = "cluster"))
     clust <- data |>
       group_by(get(fe)) |>
@@ -191,6 +195,7 @@ donut_analysis <- function(dist,
   } else if (se == "conley") {
     model_fe <- do.call("feols", list(formula(paste(c(formula, fe), collapse = "|")),
                                       data = data,
+                                      weights = weights,
                                       vcov_conley(lat = lat,
                                                   lon = lon,
                                                   cutoff = outer,

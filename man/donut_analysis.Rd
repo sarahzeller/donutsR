@@ -9,6 +9,7 @@ donut_analysis(
   ds,
   dep_var,
   indep_vars,
+  weights = NULL,
   fe = "id",
   dist_var = "dist_km",
   se = "cluster",
@@ -32,6 +33,8 @@ The outer distance refers to the overall population: it is the cut-off value.}
 \item{dep_var}{The dependent variable in the regression}
 
 \item{indep_vars}{a character vector of independent variables. Must be part of \code{ds}.}
+
+\item{weights}{a numeric vector for weights. Must be part of \code{ds}.}
 
 \item{fe}{a character vector of Fixed Effects variables. Must be part of \code{ds}.}
 
